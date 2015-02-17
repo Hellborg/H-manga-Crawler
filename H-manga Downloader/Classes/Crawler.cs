@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Crawler2._0.Classes.Websites;
-using Crawler2._0.Properties;
+using Crawler2._0.Forms;
 
 //Måste ta och skriva om downloader / crawler, det är påtok för segt, måste gå att skriva bättre
 
@@ -16,7 +16,6 @@ namespace Crawler2._0.Classes
         //Classes
 
 
-        private readonly Settings _settings = new Settings();
         internal List<Manga> Mangalist;
 
         public Crawler(Listhandler lstHandler, List<Manga> list)
@@ -50,7 +49,7 @@ namespace Crawler2._0.Classes
             switch ((string) siteName)
             {
                 case "Nhentai":
-                    var crawlerNhentai = new CrawlerNhentai(this, _listhandler.ReadTagList());
+                    var crawlerNhentai = new CrawlerNhentai( _listhandler.ReadTagList());
                     crawlerNhentai.ListCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
                     crawlerNhentai.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
 
@@ -67,20 +66,10 @@ namespace Crawler2._0.Classes
 
 
                 case "Fakku":
-                    var crawlerFakku = new CrawlerFakku();
-                    crawlerFakku.FakkulistCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
-                    crawlerFakku.FakkulistCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
-
-                    Mangalist.AddRange(crawlerFakku.Crawl());
+                    
                     break;
                 case "Hentai2read":
-                    var crawlerHentai2Read = new CrawlerHentai2Read();
-                    crawlerHentai2Read.Hentai2ReadlistCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
-                    crawlerHentai2Read.Hentai2ReadlistCrawlingUpdateProgressEvent +=
-                        MangalistCrawlingUpdateProgressEventRelay;
-
-
-                    Mangalist.AddRange(crawlerHentai2Read.Crawl());
+                       
 
 
                     break;
@@ -110,7 +99,6 @@ namespace Crawler2._0.Classes
                     crawlerPururin.PictureCrawlingStartedEvent += PictureCrawlingStartedEventRelay;
                     crawlerPururin.PictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
                     crawlerPururin.PictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
-                    crawlerPururin.MangaDownloadFinishedEvent += MangaDownloadFinishedEventRelay;
                     crawlerPururin.PictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
                     
                     
@@ -140,9 +128,8 @@ namespace Crawler2._0.Classes
 
                     break;
                 case "Nhentai":
-                    var crawlerNhentai = new CrawlerNhentai(this,null);
+                    var crawlerNhentai = new CrawlerNhentai(null);
                     
-                    crawlerNhentai.PictureCrawlingStartedEvent += PictureCrawlingStartedEventRelay;
                     crawlerNhentai.PictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
                     crawlerNhentai.PictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
                     crawlerNhentai.PictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
@@ -169,22 +156,7 @@ namespace Crawler2._0.Classes
 
                     break;
                 case "Fakku":
-                    var crawlerFakku = new CrawlerFakku();
-                    crawlerFakku.FakkuPictureCrawlingStartedEvent += PictureCrawlingStartedEventRelay;
-                    crawlerFakku.FakkuPictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
-                    crawlerFakku.FakkuPictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
-                    //crawlerFakku.FakkuMangaDownloadFinishedEvent += MangaDownloadFinishedEvent_Relay;
-                    crawlerFakku.FakkuPictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
-
-
-                    crawlerFakku.CrawlPictureUrls_Fakku(selectedManga, createSubfolders);
-                    Form1.CompletedMangaToBeSaved.Add(
-                        selectedManga.Title +
-                        "%#%Downloaded%#%" +
-                        DateTime.Now + "%#%" +
-                        DownloadPath + "%#%" +
-                        selectedManga.CoverUrl
-                        );
+                    
                     break;
             }
         }
@@ -245,7 +217,6 @@ namespace Crawler2._0.Classes
             {
                 case "Pururin":
                     var crawlerPururin = new CrawlerPururin(this, _listhandler.ReadTagList());
-                    crawlerPururin.TagCrawlingStartedEvent += TagCrawlingStartedEventRelay;
                     crawlerPururin.CrawlTagList_Pururin(null);
 
                     break;

@@ -4,62 +4,42 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Crawler2._0.Forms;
 using Crawler2._0.Properties;
 using CsQuery;
-using CsQuery.ExtensionMethods.Internal;
 using Newtonsoft.Json;
-
-//using HtmlAgilityPack;
 
 namespace Crawler2._0.Classes.Websites
 {
     internal class CrawlerNhentai
     {
-        //private HtmlDocument _htmlAgilityDocumentPicture;
-        //private HtmlDocument _htmlAgilityDocumentTag;
-        // private const string MaxNodeXpath = "//div[@class='pager jumper']";
         private const string UrlListStartUrl = "http://pururin.com/browse/0/60/1.html";
         private const string MaxNodeXpathPururin = "div.pager";
-        private const string MangaListXpathPururin = "#list-browse > ul> li";
-        private const string TitleNodeXpath = "div > a > div.overlay > div.title > div > h2";
-        private const string InfoNodeXpath = "div > a > div.overlay > div.info > div:nth-child(1)";
-        private const string GalleryLinkXpath = "div > a";
         private const int NrOfCalls = 150;
         private readonly Downloader _downloader = new Downloader();
         private readonly List<Manga> _nhentaiMangaList = new List<Manga>();
-        private readonly Crawler _parent;
-        private readonly bool _saveCovers;
+        
         //private HtmlWeb _htmlAgilityWeb = new HtmlWeb();
         private readonly Settings _settings = new Settings();
-        private readonly List<string> _urlQueueTagList = new List<string>();
         private CQ _mangaCqDocument;
-        private int _mangaPageCount;
         private CQ _pictureCqDocument;
-        private List<string> _urlList;
         public Dictionary<int, string> TagDictionary = new Dictionary<int, string>();
-        ManualResetEvent ma = new ManualResetEvent(false);
-        public CrawlerNhentai(Crawler crawler, Dictionary<int, string> dic)
+        readonly ManualResetEvent _ma = new ManualResetEvent(false);
+        public CrawlerNhentai(Dictionary<int, string> dic)
         {
-            _parent = crawler;
-            _saveCovers = _settings.SaveCoversToDisk;
             TagDictionary = dic;
         }
 
         public event Crawler.MangalistCrawlingUpdateProgressEventHandler ListCrawlingUpdateProgressEvent;
         public event Crawler.MangalistCrawlingStartedEventHandler ListCrawlingStartedEvent;
-        public event Crawler.PictureCrawlingStartedEventHandler PictureCrawlingStartedEvent;
         public event Crawler.PictureCrawlingUpdateProgressEventHandler PictureCrawlingUpdateProgressEvent;
         public event Crawler.PictureDownloadStartedEventHandler PictureDownloadStartedEvent;
         public event Crawler.PictureDownloadUpdateProgressEventHandler PictureDownloadUpdateProgressEvent;
-        public event Crawler.MangaDownloadFinishedEventHandler MangaDownloadFinishedEvent;
-        public event Crawler.TagCrawlingStartedEventHandler TagCrawlingStartedEvent;
-        public event Crawler.TagCrawlingFinishedEventHandler TagCrawlingFinishedEvent;
-        public event Crawler.TagCrawlingUpdateProgressEventHandler TagCrawlingUpdateProgressEvent;
 
+        //Gets the number of pages by finding the value on the website.
         private int GetPageCount()
         {
             var cqMaxNode = _mangaCqDocument[MaxNodeXpathPururin];
@@ -68,7 +48,7 @@ namespace Crawler2._0.Classes.Websites
 
             return value;
         }
-
+        //Create all the gallery urls based on the number of pages that there are.
         internal List<string> CreateUrls()
         {
             var localList = new List<string>();
@@ -77,10 +57,6 @@ namespace Crawler2._0.Classes.Websites
             if (_mangaCqDocument != null)
             {
                 var pageCount = GetPageCount();
-
-
-                //if (ListCrawlingStartedEvent != null)
-                //eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePururinlistCrawlingStartedEvent(pageCount);
 
 
                 for (var x = 1; x < pageCount; x++)
@@ -92,19 +68,12 @@ namespace Crawler2._0.Classes.Websites
             return localList;
         }
 
+        //This is the function in use, downloads a list file from a server. the others exist to be used if this wont work
+        //The failsafe has not been added.
         public List<Manga> DownloadListfile()
         {
             WebClient client = new WebClient();
            
-            
-            //string test = client.DownloadString("http://hellborg.org.preview.crystone.se/Lists/nhentai.List");
-           // File.WriteAllText("Data\\Lists\\nhentai.List",test);
-            //using (StreamWriter sw = new StreamWriter(@"Data\\Lists\\nhentai.List"))
-            //{
-               // sw.Write(test);
-            //}
-
-            //Debugger.Log(1,"",test);
             try
             {
 
@@ -118,18 +87,18 @@ namespace Crawler2._0.Classes.Websites
                 {
                    if ((localFileInfo.CreationTime.Day - DateTime.Now.Day) > 1)
                     {
-                        ma.Reset();
+                        _ma.Reset();
 
                       client.DownloadFileAsync(remoteFile, localFile);
-                        ma.WaitOne();
+                        _ma.WaitOne();
                     } 
                 }
                 else
                 {
-                    ma.Reset();
+                    _ma.Reset();
 
                     client.DownloadFileAsync(remoteFile, localFile);
-                    ma.WaitOne();
+                    _ma.WaitOne();
                 }
                 
                 
@@ -144,28 +113,26 @@ namespace Crawler2._0.Classes.Websites
 
         void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            ma.Set();
+            _ma.Set();
         }
 
         
 
         void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            double bytesIn = double.Parse(e.BytesReceived.ToString());
-            double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-            double percentage = e.ProgressPercentage;
+           double percentage = e.ProgressPercentage;
             if (ListCrawlingUpdateProgressEvent != null)
                 ListCrawlingUpdateProgressEvent(percentage);
 
         }
+        //Not in use
         public void FetchFromApi()
         {
             var client = new WebClient();
             var mangaCount = Convert.ToInt32(client.DownloadString("http://hellborg.org/GetJson.php?Site=nhentai&Count"));
-            Debugger.Log(1, "counter", "count = " + mangaCount);
             var remainder = mangaCount%NrOfCalls;
 
-            var calls = (mangaCount - remainder);
+            
             var mangasPerCall = (mangaCount - remainder)/NrOfCalls;
 
 
@@ -173,7 +140,6 @@ namespace Crawler2._0.Classes.Websites
                 ListCrawlingStartedEvent(NrOfCalls + 1);
 
             var z = 0;
-            Debugger.Log(1, "", "mangas per call = " + mangasPerCall);
             Parallel.For(z, NrOfCalls, ctr =>
             {
                 var localClient = new WebClient();
@@ -285,123 +251,12 @@ namespace Crawler2._0.Classes.Websites
 
         internal List<Manga> Crawl()
         {
-            //get info from mysql, with the normal crawling as a fallback
-
             return DownloadListfile();
-            
-
-            //1FetchFromApi();
-
-            if (_nhentaiMangaList.Count == 0)
-            {
-                _urlList = CreateUrls();
-                Parallel.ForEach(_urlList, item => FetchInfo(item));
-            }
-
-            //return _nhentaiMangaList;
         }
 
-        private void FetchInfo(string currentMangaPage)
-        {
-            //try
-            //{
-            var document = CQ.CreateFromUrl(currentMangaPage);
+       
 
-
-            //_htmlAgilityDocumentManga = _htmlAgilityWeb.Load(currentMangaPage);
-            //}
-
-            //catch (//HtmlAgilityPack.HtmlWebException webException)
-            //{
-            //Loghandler.LogToFile(webException, 3);
-            //Add a eventhander that deals with errors
-            //}
-
-
-            var htmlAgilityNodeCollection = document[MangaListXpathPururin];
-
-
-            if (ListCrawlingUpdateProgressEvent != null)
-                ListCrawlingUpdateProgressEvent(1);
-
-            foreach (var node in htmlAgilityNodeCollection)
-            {
-                var m = new Manga();
-                var titleNode = node.Cq().Find(TitleNodeXpath);
-                // titlenode = htmlAgilityNode;
-
-                var titleString = titleNode.Html().Split(new[] {"<br>"}, StringSplitOptions.None)[0];
-                // titleNode.InnerHtml.Split(new[] { "<br>" }, StringSplitOptions.None)[0];
-
-
-                if (_parent.Mangalist.Count(item => item.Title == titleString) == 0)
-                {
-                    var tagStrings = node.GetAttribute("data-tags").Split('-');
-                    // htmlAgilityNode.Attributes["data-tags"].Value.Split('-');
-                    var tags = tagStrings.Select(Int32.Parse).ToArray();
-
-                    var infoNode = node.Cq().Find(InfoNodeXpath);
-
-                    var explodedInfoString = infoNode.Text().Split(',');
-                    ////string InfoString = ExplodedInfoString[0];
-                    //var languageString = explodedInfoString[explodedInfoString.Length - 2];
-
-                    //#list-browse > ul > li.G16872.gallery-block > #list-browse > ul > li.G16872.gallery-block > div > a > div.overlay > div.info > div:nth-child(1)
-                    var pagesInt =
-                        Convert.ToInt32(Regex.Replace(explodedInfoString[explodedInfoString.Length - 1], "[^0-9.]", ""));
-                    ////Fucks up here IF there are Numbers in the name
-
-
-                    var galleryNode = node.Cq().Find(GalleryLinkXpath);
-
-                    var galleryUrl = "www.pururin.com" + galleryNode[0].GetAttribute("href");
-                    Debugger.Log(1, "CSS path", "gallery url = " + galleryUrl);
-                    var coverUrl = "www.pururin.com" + galleryNode.Children("img")[0].GetAttribute("src");
-                    if (_saveCovers)
-                    {
-                        if (!Directory.Exists("Data/Pictures/Covers"))
-                            Directory.CreateDirectory("Data/Pictures/Covers");
-
-
-                        var client = new WebClient();
-
-                        var filename = Path.GetFileName(coverUrl);
-                        var filepath = "Data/Pictures/Covers/Pururin" + filename;
-
-                        if (!File.Exists(filepath))
-                        {
-                            client.DownloadFile("http://" + coverUrl, filepath);
-                        }
-                        m.LocalImage = true;
-                        m.ImagePath = filepath;
-                    }
-                    else
-                    {
-                        m.ImagePath = Path.GetFileName(coverUrl);
-                    }
-                    m.Title = titleString;
-                    m.Pages = pagesInt;
-                    m.Website = "Pururin";
-                    //if (MangaReadEvent != null)
-                    //  MangaReadEvent(pagesInt);
-
-
-                    if (Form1.MaxPages < pagesInt)
-                        Form1.MaxPages = pagesInt;
-
-                    m.GalleryUrl = galleryUrl;
-                    //m.Language = languageString;
-                    m.CoverUrl = coverUrl;
-
-                    //m.info = InfoString;
-                    //m.Tags = tags;
-                    _nhentaiMangaList.Add(m);
-                    // Parent.Mangalist.Add(m);
-                }
-            }
-        }
-
-        public List<string> GetSource(List<string> urls, int pages, string title)
+        public List<string> GetSource(List<string> urls, int pages, string title)//not in use
         {
             var currentCount = pages;
             var tempList = new List<string>();
@@ -485,60 +340,17 @@ namespace Crawler2._0.Classes.Websites
 
         public void CrawlPictureUrls_Nhentai(object o, bool createSubfolders)
         {
-
-
-
-
-
             var sourceQueue = new List<string>();
             sourceQueue.Clear();
             var m = ((Manga) o);
 
             var currentCount = 0;
-            if (!m.PageLinks.Any())
-            {
-                var url = "http://" + m.GalleryUrl.Replace("gallery", "view");
-                var idRegex = new Regex(@"/view/(\d+)");
-                var id = idRegex.Match(url).Groups[1].Value;
-                var titleRegex = new Regex(@id + "/(.*)");
-                var title = titleRegex.Match(url).Groups[1].Value;
-                var downloadPath = "";
-                
-                downloadPath = _settings.DownloadPath + "/Pururin/";
-
-
-                _mangaPageCount = m.Pages;
-
-                if (PictureCrawlingStartedEvent != null)
-                    PictureCrawlingStartedEvent(m.Title, "Prepairing pictures", "0.0 %", "0 /" + m.Pages);
-
-                sourceQueue = GetSource(CreateLinks(id, title, m.Pages, "http://www.pururin.com/view/"), m.Pages, m.Title);
-                
-
-
-                if (PictureDownloadStartedEvent != null)
-                    PictureDownloadStartedEvent(m.Title, m.Pages.ToString());
-
-                Parallel.ForEach(sourceQueue, currentSource =>
-                {
-                    currentCount++;
-                    if (!_downloader.Download(currentSource, downloadPath, m.Title, m.Title, m.Pages, currentCount)) return;
-
-                    if (PictureDownloadUpdateProgressEvent != null)
-                        PictureDownloadUpdateProgressEvent(m.Title, m.Pages, currentCount); //
-                }); //add crawlerObject to download queue, and 
-
-                Crawler.DownloadPath = downloadPath;
-            }
-
             foreach (string s in m.PageLinks)
             {
                 if (m.Website == "Nhentai")
                 {
                     sourceQueue.Add(string.Format("http://i.nhentai.net/galleries/{0}/{1}",m.UniqueId,s));    
                 }
-
-
             }
             string path = _settings.DownloadPath + "/Nhentai/";
             
@@ -559,15 +371,6 @@ namespace Crawler2._0.Classes.Websites
             Crawler.DownloadPath = path;
 
             
-        }
-        public static void While(ParallelOptions parallelOptions, Func<bool> condition, Action body)
-        {
-            Parallel.ForEach(IterateUntilFalse(condition), parallelOptions, ignored => body());
-        }
-
-        public static IEnumerable<bool> IterateUntilFalse(Func<bool> condition)
-        {
-            while (condition()) yield return true;
         }
     }
 

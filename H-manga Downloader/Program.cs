@@ -14,7 +14,7 @@ namespace Crawler2._0
         [STAThread]
         private static void Main()
         {
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(ThreadErrorHandler);
+            AppDomain.CurrentDomain.UnhandledException += ThreadErrorHandler;
             Application.ThreadException +=Application_ThreadException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -26,7 +26,7 @@ namespace Crawler2._0
             DialogResult result = DialogResult.Abort;
             try
             {
-                ReportError_Form reportErrorForm = new ReportError_Form(e);
+                ReportErrorForm reportErrorForm = new ReportErrorForm(e);
                 reportErrorForm.ShowDialog();
 
                // result = MessageBox.Show("Whoops! Please contact the developers with the"

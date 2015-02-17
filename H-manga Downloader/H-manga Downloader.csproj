@@ -98,16 +98,8 @@
     <Compile Include="Classes\Downloader.cs" />
     <Compile Include="Classes\Listhandler.cs" />
     <Compile Include="Classes\Loghandler.cs" />
-    <Compile Include="Classes\Websites\Crawler_Fakku.cs" />
-    <Compile Include="Classes\Websites\Crawler_Hentai2read.cs" />
     <Compile Include="Classes\Websites\Crawler_Nhentai.cs" />
     <Compile Include="Classes\Websites\Crawler_Pururin.cs" />
-    <Compile Include="Forms\Add_Subreddit_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Add_Subreddit_Form.Designer.cs">
-      <DependentUpon>Add_Subreddit_Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Main_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,9 +126,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\Add_Subreddit_Form.resx">
-      <DependentUpon>Add_Subreddit_Form.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main_Form.resx">
       <DependentUpon>Main_Form.cs</DependentUpon>
     </EmbeddedResource>

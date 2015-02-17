@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
+using Crawler2._0.Forms;
 
 namespace Crawler2._0.Classes
 {
@@ -33,7 +33,6 @@ namespace Crawler2._0.Classes
         {
             try
             {
-                var debugCounter = 0;
                 var sb = new StringBuilder();
                 foreach (var m in mangaList)
                 {
@@ -41,7 +40,7 @@ namespace Crawler2._0.Classes
                         Debugger.Break();
                     var tagbuilder = new StringBuilder();
                     string tags;
-                    if (m.Tags != null)
+                    if (m != null && m.Tags != null)
                     {
                         foreach (var x in m.Tags)
                         {
@@ -52,8 +51,6 @@ namespace Crawler2._0.Classes
                     else
                         tags = "1,2";
 
-                    debugCounter++;
-                    //Debugger.Log(1, "Writer", "Current manga count: " + debugCounter+Environment.NewLine);
                     sb.AppendLine(m.Title + "%#%"  + m.GalleryUrl + "%#%" + m.Pages + "%#%" + m.LocalImage +
                                   "%#%" +
                                   "http://" + m.ImagePath + "%#%" + tags + "%#%" + m.CoverUrl + "%#%" + m.Website +
@@ -152,24 +149,6 @@ namespace Crawler2._0.Classes
             return tempList;
         }
 
-        public void WriteTagList(Dictionary<string, string> tagDictionary)
-        {
-            var stringBuilderTagFile = new StringBuilder();
-
-
-            foreach (var keyValuePair in tagDictionary)
-            {
-                if (keyValuePair.Value != null)
-                {
-                    var value = keyValuePair.Value.Replace("\n", " ");
-
-
-                    stringBuilderTagFile.AppendLine(keyValuePair.Key + "=>" + value);
-                }
-            }
-            File.WriteAllText("Data/Tags/Pururin.Tags", stringBuilderTagFile.ToString());
-        }
-
         public Dictionary<int, string> ReadTagList()
         {
             var tempDictionary = new Dictionary<int, string>();
@@ -252,15 +231,10 @@ namespace Crawler2._0.Classes
 
         public delegate void MangaListLineReadEventHandler(Manga m);
 
-        public event MangaListLineReadEventHandler MangaListLineRead;
-
         public delegate void MangaListReadFinishedEventHandler();
-
-        public event MangaListReadFinishedEventHandler MangaListReadFinished;
 
         public delegate void MangaListWriteFinishedEventHandler(List<Manga> list);
 
-        public event MangaListWriteFinishedEventHandler MangaListWriteFinished;
 
         public delegate void FailedMangaLineWriteEventHandler(Exception ex);
 
@@ -268,7 +242,6 @@ namespace Crawler2._0.Classes
 
         public delegate void TagListLineReadEventHandler(int key, string value);
 
-        public event TagListLineReadEventHandler TagListLineRead;
         //vill helst byta namn på dessa, blir för långa och jobbiga att läsa
 
         #endregion

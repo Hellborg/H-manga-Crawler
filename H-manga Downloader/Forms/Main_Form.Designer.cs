@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using BrightIdeasSoftware;
 
-namespace Crawler2._0
+namespace Crawler2._0.Forms
 {
     partial class Form1
     {
@@ -41,6 +41,7 @@ namespace Crawler2._0
             this.ApplyFilterButton = new System.Windows.Forms.Button();
             this.FilterCheckbox_downloaded = new System.Windows.Forms.CheckBox();
             this.groupBoxTags = new System.Windows.Forms.GroupBox();
+            this.labelFilteredOut = new System.Windows.Forms.Label();
             this.FilterCheckbox_12 = new System.Windows.Forms.CheckBox();
             this.FilterCheckbox_11 = new System.Windows.Forms.CheckBox();
             this.FilterCheckbox_10 = new System.Windows.Forms.CheckBox();
@@ -118,7 +119,6 @@ namespace Crawler2._0
             this.ListviewMangas = new BrightIdeasSoftware.FastObjectListView();
             this.titleColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.pageColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.labelFilteredOut = new System.Windows.Forms.Label();
             this.tabcontrolMain.SuspendLayout();
             this.TabpageInfo.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -259,6 +259,15 @@ namespace Crawler2._0
             this.groupBoxTags.TabIndex = 20;
             this.groupBoxTags.TabStop = false;
             this.groupBoxTags.Text = "Tags";
+            // 
+            // labelFilteredOut
+            // 
+            this.labelFilteredOut.AutoSize = true;
+            this.labelFilteredOut.Location = new System.Drawing.Point(304, 180);
+            this.labelFilteredOut.Name = "labelFilteredOut";
+            this.labelFilteredOut.Size = new System.Drawing.Size(62, 13);
+            this.labelFilteredOut.TabIndex = 17;
+            this.labelFilteredOut.Text = "Filtered out ";
             // 
             // FilterCheckbox_12
             // 
@@ -859,19 +868,19 @@ namespace Crawler2._0
             this.ToolstripItemGotoGallery,
             this.ToolstripItemDownload});
             this.ContextmenuMangalist.Name = "cmMangalist";
-            this.ContextmenuMangalist.Size = new System.Drawing.Size(143, 48);
+            this.ContextmenuMangalist.Size = new System.Drawing.Size(153, 70);
             // 
             // ToolstripItemGotoGallery
             // 
             this.ToolstripItemGotoGallery.Name = "ToolstripItemGotoGallery";
-            this.ToolstripItemGotoGallery.Size = new System.Drawing.Size(142, 22);
+            this.ToolstripItemGotoGallery.Size = new System.Drawing.Size(152, 22);
             this.ToolstripItemGotoGallery.Text = "Go to Gallery";
             this.ToolstripItemGotoGallery.Click += new System.EventHandler(this.ToolstripItemGotoGallery_Click);
             // 
             // ToolstripItemDownload
             // 
             this.ToolstripItemDownload.Name = "ToolstripItemDownload";
-            this.ToolstripItemDownload.Size = new System.Drawing.Size(142, 22);
+            this.ToolstripItemDownload.Size = new System.Drawing.Size(152, 22);
             this.ToolstripItemDownload.Text = "Download";
             this.ToolstripItemDownload.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
             // 
@@ -983,15 +992,6 @@ namespace Crawler2._0
             this.pageColumn.Text = "Pages";
             this.pageColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.pageColumn.Width = 50;
-            // 
-            // labelFilteredOut
-            // 
-            this.labelFilteredOut.AutoSize = true;
-            this.labelFilteredOut.Location = new System.Drawing.Point(304, 180);
-            this.labelFilteredOut.Name = "labelFilteredOut";
-            this.labelFilteredOut.Size = new System.Drawing.Size(62, 13);
-            this.labelFilteredOut.TabIndex = 17;
-            this.labelFilteredOut.Text = "Filtered out ";
             // 
             // Form1
             // 

@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Crawler2._0.Forms;
 using Crawler2._0.Properties;
 using CsQuery;
 using Newtonsoft.Json;
@@ -22,24 +23,23 @@ namespace Crawler2._0.Classes.Websites
         //private HtmlDocument _htmlAgilityDocumentTag;
         // private const string MaxNodeXpath = "//div[@class='pager jumper']";
         private const string UrlListStartUrl = "http://pururin.com/browse/0/60/1.html";
-        private const string MaxAttributeXpath = "data-pmax";
-        private const string TagListStartUrlPururin = "http://pururin.com/tags/0/10/tags.html";
+        
         private const string MaxNodeXpathPururin = "div.pager";
-        private const string MangaListXpathPururin = "#list-browse > ul> li";
+        /*private const string MangaListXpathPururin = "#list-browse > ul> li";
         private const string TitleNodeXpath = "div > a > div.overlay > div.title > div > h2";
         private const string InfoNodeXpath = "div > a > div.overlay > div.info > div:nth-child(1)";
         private const string GalleryLinkXpath = "div > a";
+         */
         private const int NrOfCalls = 300;
         private readonly Downloader _downloader = new Downloader();
         private readonly Crawler _parent;
-        private readonly List<Manga> _pururinMangaList = new List<Manga>();
         private readonly bool _saveCovers;
         //private HtmlWeb _htmlAgilityWeb = new HtmlWeb();
         private readonly Settings _settings = new Settings();
         private readonly Dictionary<int, string> _tagDictionary = new Dictionary<int, string>();
-        private readonly List<string> _urlQueueTagList = new List<string>();
+       
         private CQ _mangaCqDocument;
-        private int _mangaPageCount;
+        
         private CQ _pictureCqDocument;
         private List<string> _urlList;
 
@@ -56,11 +56,6 @@ namespace Crawler2._0.Classes.Websites
         public event Crawler.PictureCrawlingUpdateProgressEventHandler PictureCrawlingUpdateProgressEvent;
         public event Crawler.PictureDownloadStartedEventHandler PictureDownloadStartedEvent;
         public event Crawler.PictureDownloadUpdateProgressEventHandler PictureDownloadUpdateProgressEvent;
-        public event Crawler.MangaDownloadFinishedEventHandler MangaDownloadFinishedEvent;
-        public event Crawler.TagCrawlingStartedEventHandler TagCrawlingStartedEvent;
-        public event Crawler.TagCrawlingFinishedEventHandler TagCrawlingFinishedEvent;
-        public event Crawler.TagCrawlingUpdateProgressEventHandler TagCrawlingUpdateProgressEvent;
-
         private int GetPageCount()
         {
             var cqMaxNode = _mangaCqDocument[MaxNodeXpathPururin];
@@ -145,8 +140,6 @@ namespace Crawler2._0.Classes.Websites
 
                     m.Website = "Pururin";
 
-
-                    _pururinMangaList.Add(m);
                     //add to manga list
                 }
                 z = z + mangasPerCall;
@@ -185,7 +178,6 @@ namespace Crawler2._0.Classes.Websites
                 m.Website = "Pururin";
 
 
-                _pururinMangaList.Add(m);
                 //add to manga list
             }
         }
@@ -207,20 +199,10 @@ namespace Crawler2._0.Classes.Websites
         internal List<Manga> Crawl()
         {
             return DownloadListfile();
-            //get info from mysql, with the normal crawling as a fallback
-
-            //FetchFromApi();
-
-            //if (_pururinMangaList.Count == 0)
-            //{
-            //    _urlList = CreateUrls();
-            //    Parallel.ForEach(_urlList, item => FetchInfo(item));
-            //}
-
-            //return _pururinMangaList;
+            
         }
 
-        private void FetchInfo(string currentMangaPage)
+        /*private void FetchInfo(string currentMangaPage)
         {
             //try
             //{
@@ -301,25 +283,18 @@ namespace Crawler2._0.Classes.Websites
                     m.Title = titleString;
                     m.Pages = pagesInt;
                     m.Website = "Pururin";
-                    //if (MangaReadEvent != null)
-                    //  MangaReadEvent(pagesInt);
 
 
                     if (Form1.MaxPages < pagesInt)
                         Form1.MaxPages = pagesInt;
 
                     m.GalleryUrl = galleryUrl;
-                    //m.Language = languageString;
                     m.CoverUrl = coverUrl;
 
-                    //m.info = InfoString;
-                    //m.Tags = tags;
-                    _pururinMangaList.Add(m);
-                    // Parent.Mangalist.Add(m);
                 }
             }
         }
-
+        */
         public List<string> GetSource(List<string> urls, int pages, string title)
         {
             var currentCount = pages;
@@ -418,7 +393,6 @@ namespace Crawler2._0.Classes.Websites
             downloadPath = _settings.DownloadPath + "/Pururin/";
 
 
-            _mangaPageCount = m.Pages;
 
             if (PictureCrawlingStartedEvent != null)
                 PictureCrawlingStartedEvent(m.Title, "Prepairing pictures", "0.0 %", "0 /" + m.Pages);

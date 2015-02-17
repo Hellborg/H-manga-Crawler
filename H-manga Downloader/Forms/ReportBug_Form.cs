@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Crawler2._0.Forms
 {
-    public partial class ReportBug_Form : Form
+    //Currently not in use, simply because its not finished
+    public partial class ReportBugForm : Form
     {
-        public ReportBug_Form()
+        public ReportBugForm()
         {
             InitializeComponent();
         }

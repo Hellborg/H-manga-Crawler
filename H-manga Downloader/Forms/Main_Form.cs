@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -12,7 +11,6 @@ using System.Threading;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
 using Crawler2._0.Classes;
-using Crawler2._0.Forms;
 using Crawler2._0.Properties;
 
 //Städa koden
@@ -30,7 +28,7 @@ using Crawler2._0.Properties;
 //Fixa buggen med att den ibland inte uppdatererar progress, utan står kvar på awaiting free thread
 //verkar som att detta bara händer första gången när jag måste ladda ner list filen, och sedan inte stänger av programmet eoch startar det igen.
 
-namespace Crawler2._0
+namespace Crawler2._0.Forms
 {
     public partial class Form1 : Form
     {
@@ -71,9 +69,6 @@ namespace Crawler2._0
             #region CustomEventHandlers
 
             _listhandler.CompletedMangaLineRead += _listhandler_CompletedLineRead;
-            _listhandler.MangaListLineRead += _listhandler_MangaListRead;
-            _listhandler.MangaListReadFinished += _listhandler_MangaListReadFinished;
-            _listhandler.TagListLineRead += _listhandler_TagListLineRead;
 
             #endregion
         }
@@ -202,7 +197,7 @@ namespace Crawler2._0
                 if (result == DialogResult.Yes)
                 {
                     //Show tagdownloader form
-                    _tagDownloader = new TagDownloaderForm(_crawler, this);
+                    _tagDownloader = new TagDownloaderForm(_crawler);
                     _tagDownloader.Closed += tagDownloader_Closed;
 
                     _tagDownloader.ShowDialog();

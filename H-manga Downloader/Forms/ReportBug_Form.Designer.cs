@@ -1,6 +1,6 @@
 ﻿namespace Crawler2._0.Forms
 {
-    partial class ReportBug_Form
+    partial class ReportBugForm
     {
         /// <summary>
         /// Required designer variable.

@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Mail;
 
 namespace Crawler2._0.Forms
 {
-    public partial class ReportError_Form : Form
+    public partial class ReportErrorForm : Form
     {
         ThreadExceptionEventArgs t_error;
-        public ReportError_Form(ThreadExceptionEventArgs t)
+        public ReportErrorForm(ThreadExceptionEventArgs t)
         {
             InitializeComponent();
             t_error = t;
@@ -29,7 +22,6 @@ namespace Crawler2._0.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string message = t_error.Exception.Message;
             MailMessage mail = new MailMessage("crawler@hellborg.org", "jonatanhellborg@gmail.com");
             SmtpClient client = new SmtpClient();
             client.Port = 587;

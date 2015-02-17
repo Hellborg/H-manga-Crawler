@@ -1,6 +1,6 @@
 ﻿namespace Crawler2._0.Forms
 {
-    partial class ReportError_Form
+    partial class ReportErrorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -79,7 +79,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Name = "ReportError_Form";
+            this.Name = "ReportErrorForm";
             this.Text = "Oops, an error occured";
             this.Load += new System.EventHandler(this.ReportError_Form_Load);
             this.ResumeLayout(false);

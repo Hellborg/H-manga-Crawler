@@ -6,14 +6,11 @@ namespace Crawler2._0.Classes
 {
     internal class Loghandler
     {
-        private const int LoggingLevel = 1; //1 is everything, 2 is debug, 3 is errors
-        private static string _logPath;
+        private const int LoggingLevel = 3; //1 is everything, 2 is debug, 3 is errors
+        
         private static readonly object Locker = new object();
 
-        public Loghandler(string path)
-        {
-            _logPath = path;
-        }
+        
 
         public static void LogToFile(Exception exception, int level)
         {
