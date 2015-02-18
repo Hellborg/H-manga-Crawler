@@ -81,18 +81,19 @@ namespace Crawler2._0.Classes
         private string CreateSanitizedFolderName(string rootpath, string foldername)
         {
             //use regex and remove [] anmd whats between
-            Regex reg = new Regex(@"\[(.*?)\]|\((.*?)\)");
-            foldername = reg.Replace(foldername,"");
+            var reg = new Regex(@"\[(.*?)\]|\((.*?)\)");
+            foldername = reg.Replace(foldername, "");
             foldername = foldername.Trim();
 
-                if (_createSubfolder)
-                {
-                    string path = rootpath + Path.GetInvalidFileNameChars().Aggregate(foldername, (current, c) => current.Replace(c.ToString(), string.Empty));
-                    
-                    return path;
-                }
-                return rootpath;;    
-            
+            if (_createSubfolder)
+            {
+                var path = rootpath +
+                           Path.GetInvalidFileNameChars()
+                               .Aggregate(foldername, (current, c) => current.Replace(c.ToString(), string.Empty));
+
+                return path;
+            }
+            return rootpath;
             
         }
 
@@ -103,7 +104,7 @@ namespace Crawler2._0.Classes
                 new FileInfo(filepath + origFileName);
                 return filepath + "//" + origFileName;
             }
-            catch (PathTooLongException pathTooLongException)
+            catch (PathTooLongException)
             {
                 var ext = Path.GetExtension(origFileName);
                 var reg = new Regex("([0-9]*)" + ext);
@@ -111,7 +112,6 @@ namespace Crawler2._0.Classes
             }
         }
 
-        public event Crawler.PictureDownloadUpdateProgressEventHandler PictureDownloadUpdateProgressEvent;
 
         #region Pururin
 

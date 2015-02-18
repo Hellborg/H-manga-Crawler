@@ -45,11 +45,10 @@ namespace Crawler2._0.Classes
 
         public void Crawl_MangaList(object siteName)
         {
-
             switch ((string) siteName)
             {
                 case "Nhentai":
-                    var crawlerNhentai = new CrawlerNhentai( _listhandler.ReadTagList());
+                    var crawlerNhentai = new CrawlerNhentai(_listhandler.ReadTagList());
                     crawlerNhentai.ListCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
                     crawlerNhentai.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
 
@@ -58,7 +57,7 @@ namespace Crawler2._0.Classes
 
                     break;
                 case "Pururin":
-                    var crawlerPururin = new CrawlerPururin(this, _listhandler.ReadTagList());
+                    var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
                     crawlerPururin.ListCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
                     crawlerPururin.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
                     Mangalist = crawlerPururin.Crawl();
@@ -66,10 +65,9 @@ namespace Crawler2._0.Classes
 
 
                 case "Fakku":
-                    
+
                     break;
                 case "Hentai2read":
-                       
 
 
                     break;
@@ -95,17 +93,13 @@ namespace Crawler2._0.Classes
             {
                 case "Pururin":
 
-                    var crawlerPururin = new CrawlerPururin(this, _listhandler.ReadTagList());
+                    var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
                     crawlerPururin.PictureCrawlingStartedEvent += PictureCrawlingStartedEventRelay;
                     crawlerPururin.PictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
                     crawlerPururin.PictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
                     crawlerPururin.PictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
-                    
-                    
-                
-                
-                
-                   
+
+
                     stopwatch.Start();
 
                     crawlerPururin.CrawlPictureUrls_Pururin(selectedManga, createSubfolders);
@@ -129,34 +123,34 @@ namespace Crawler2._0.Classes
                     break;
                 case "Nhentai":
                     var crawlerNhentai = new CrawlerNhentai(null);
-                    
+
                     crawlerNhentai.PictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
                     crawlerNhentai.PictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
                     crawlerNhentai.PictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
                     //PictureDownloadStartedEvent
                     stopwatch.Start();
-                    crawlerNhentai.CrawlPictureUrls_Nhentai(selectedManga,createSubfolders);
+                    crawlerNhentai.CrawlPictureUrls_Nhentai(selectedManga, createSubfolders);
                     if (stopwatch.IsRunning)
                         stopwatch.Stop();
 
                     if (MangaDownloadFinishedEventRelay != null)
                         MangaDownloadFinishedEventRelay(selectedManga.Title, DateTime.Now,
                             stopwatch.Elapsed.Seconds + " seconds");
-                    
+
 
                     _listhandler.WriteToFile("Data\\Lists\\CompletedDownloads.List",
                         selectedManga.Title +
                         "%#%Downloaded%#%" +
                         DateTime.Now + "%#%" +
                         DownloadPath + "%#%" +
-                        selectedManga.CoverUrl+
-                        "%#%" + stopwatch.Elapsed.Seconds 
+                        selectedManga.CoverUrl +
+                        "%#%" + stopwatch.Elapsed.Seconds
                         );
 
 
                     break;
                 case "Fakku":
-                    
+
                     break;
             }
         }
@@ -204,7 +198,6 @@ namespace Crawler2._0.Classes
         public event PictureCrawlingFinishedEventHandler PictureCrawlingFinishedEvent;
         public event MangaDownloadFinishedEventHandler MangaDownloadFinishedEventRelay;
         public event PictureDownloadStartedEventHandler PictureDownloadStartedEventRelay;
-        public event TagCrawlingStartedEventHandler TagCrawlingStartedEventRelay;
         public event PictureDownloadUpdateProgressEventHandler PictureDownloadUpdateProgressEventRelay;
 
         #endregion
@@ -216,7 +209,7 @@ namespace Crawler2._0.Classes
             switch (siteName)
             {
                 case "Pururin":
-                    var crawlerPururin = new CrawlerPururin(this, _listhandler.ReadTagList());
+                    var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
                     crawlerPururin.CrawlTagList_Pururin(null);
 
                     break;

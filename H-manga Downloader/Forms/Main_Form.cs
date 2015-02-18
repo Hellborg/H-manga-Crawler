@@ -13,20 +13,6 @@ using BrightIdeasSoftware;
 using Crawler2._0.Classes;
 using Crawler2._0.Properties;
 
-//Städa koden
-
-
-
-
-//Behöver ändra namnen på eventen, så de är lite bättre förklarande.
-//Fixa så man kan ha custom namn på filerna. 
-//
-//  %Title%    Begränsad till 100 karaktärer
-//  %Page%     helt enkelt vilken sidnr filen har
-//   %Website%  vilken sida den är tagen ifrån
-//
-//Fixa buggen med att den ibland inte uppdatererar progress, utan står kvar på awaiting free thread
-//verkar som att detta bara händer första gången när jag måste ladda ner list filen, och sedan inte stänger av programmet eoch startar det igen.
 
 namespace Crawler2._0.Forms
 {
@@ -38,9 +24,7 @@ namespace Crawler2._0.Forms
         public static readonly List<string> SupportedSites = new List<string>(new[]
         {
             "Nhentai",
-            "Pururin" //,
-            //"Fakku",
-            //,"Hentai2read"
+            "Pururin"
         });
 
         private readonly List<string> _completedMangas = new List<string>();
@@ -53,24 +37,18 @@ namespace Crawler2._0.Forms
         private List<Manga> _mangaList = new List<Manga>();
         private Dictionary<int, string> _tagDictionary = new Dictionary<int, string>();
         private TagDownloaderForm _tagDownloader;
-        //sätta limit på antalet du kan ha i nedladdnigns kön samtidigt
-
-        
-
+       
         public Form1()
         {
             InitializeComponent();
             ServicePointManager.DefaultConnectionLimit = 160;
-
+           Thread.CurrentThread.CurrentUICulture = new CultureInfo("sv-SE");
             ThreadPool.SetMaxThreads(4, 4);
+            
             CreateDirectories();
             _saveCovers = _setting.SaveCoversToDisk;
 
-            #region CustomEventHandlers
-
             _listhandler.CompletedMangaLineRead += _listhandler_CompletedLineRead;
-
-            #endregion
         }
 
         private void CreateCrawlerEventListeners()
@@ -85,7 +63,6 @@ namespace Crawler2._0.Forms
             _crawler.MangalistCrawlingUpdateProgressEventRelay += _crawler_CrawlingUpdateProgressEvent;
 
 
-
             _crawler.MangalistCrawlingFinishedEvent += _crawler_MangalistFinishedCrawlingEvent;
 
             _crawler.MangaDownloadFinishedEventRelay += _crawler_MangaDownloadFinishedEvent;
@@ -94,28 +71,16 @@ namespace Crawler2._0.Forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // BackgroundWorkerTagDownloader.RunWorkerAsync();
-
-
-            
             LoadGui();
             LoadSettings();
             LoadTagList();
             LoadMangaList();
             FilterByTags();
             LoadCompletedDownloads();
-            //FilterByWebsite(WebsiteDropdown.SelectedItem.ToString());
             InitializeList(_filteredList);
             _crawler = new Crawler(_listhandler, _mangaList);
             CreateCrawlerEventListeners();
         }
-
-       
-
-        
-
-        
-    
 
         private void LoadGui()
         {
@@ -123,8 +88,6 @@ namespace Crawler2._0.Forms
             {
                 var node = new TreeNode();
                 node.Text = s;
-
-
             }
             UpdateWebsiteDropdown();
             TextboxCustomFilter.Text = _setting.FilterString;
@@ -137,7 +100,9 @@ namespace Crawler2._0.Forms
                 WebsiteDropdown.Items.Add(s);
             }
             WebsiteDropdown.SelectedIndex = 0;
-            DownloadButton.Text = "Download List(" + WebsiteDropdown.SelectedItem + ")";
+            DownloadButton.Text = string.Format(Strings.Download_list_String, WebsiteDropdown.SelectedItem);
+           
+
         }
 
         private void LoadCompletedDownloads()
@@ -163,9 +128,8 @@ namespace Crawler2._0.Forms
 
             ToolstripProgress.Visible = true;
             ToolstripLabel.Visible = true;
-           
-            CreateCrawlerEventListeners();
 
+            CreateCrawlerEventListeners();
 
 
             //_crawler.PictureCrawlingUpdateProgressEvent += downloader_PictureDownloadUpdateProgressEvent;
@@ -188,10 +152,10 @@ namespace Crawler2._0.Forms
                 _tagDictionary = _listhandler.ReadTagList();
             else
             {
-               // var result = MessageBox.Show("Your tag file is tooo ooooold, update it? might take a while", "",
-                  //  MessageBoxButtons.YesNo);
+                // var result = MessageBox.Show("Your tag file is tooo ooooold, update it? might take a while", "",
+                //  MessageBoxButtons.YesNo);
 
-                DialogResult result = DialogResult.No;
+                var result = DialogResult.No;
 
 
                 if (result == DialogResult.Yes)
@@ -211,13 +175,13 @@ namespace Crawler2._0.Forms
         {
             if (!Directory.Exists("Data"))
                 Directory.CreateDirectory("Data");
-            
-            if (!Directory.Exists("Data/Tags"))   
+
+            if (!Directory.Exists("Data/Tags"))
                 Directory.CreateDirectory("Data/Tags");
-            
-            if (!Directory.Exists("Data/Lists"))    
+
+            if (!Directory.Exists("Data/Lists"))
                 Directory.CreateDirectory("Data/Lists");
-            
+
             var appPath = Path.GetDirectoryName(Application.ExecutablePath);
 
             if (_setting.DownloadPath == "")
@@ -235,12 +199,10 @@ namespace Crawler2._0.Forms
             lblLanguage.Text = "";
             lblPages.Text = "";
             lblTags.Text = "";
-
         }
 
         private void TabpageOptions_Enter(object sender, EventArgs e)
         {
-          
             LoadSettings();
         }
 
@@ -304,7 +266,10 @@ namespace Crawler2._0.Forms
                     var subItemPercentage = new ListViewItem.ListViewSubItem();
                     var subItemPages = new ListViewItem.ListViewSubItem();
 
-                    subItemStatus.Text = "Awaiting free worker thread";
+                    subItemStatus.Text = Strings.Awaiting_worker_String;
+
+                    
+
                     subItemPercentage.Text = "";
                     subItemPages.Text = "";
 
@@ -326,20 +291,18 @@ namespace Crawler2._0.Forms
         private void DownloadSelected(object o)
         {
             var m = (Manga) o;
-            _crawler.Crawl_PictureUrls(m.Website, m, ListviewCurrentDownloads.Items.Count,CreateSubfoldersCheckbox.Checked);
+            _crawler.Crawl_PictureUrls(m.Website, m, ListviewCurrentDownloads.Items.Count,
+                CreateSubfoldersCheckbox.Checked);
         }
 
         private void ToolstripItemGotoGallery_Click(object sender, EventArgs e)
         {
-            var manga = (Manga)ListviewMangas.SelectedObject;
-            Process.Start("www.pururin.com/gallery"+manga.GalleryUrl);
+            var manga = (Manga) ListviewMangas.SelectedObject;
+            Process.Start("www.pururin.com/gallery" + manga.GalleryUrl);
         }
-
-     
 
         private void ShowMangaInfo(object m)
         {
-            
             var manga = (Manga) m;
             if (!InvokeRequired)
             {
@@ -348,9 +311,9 @@ namespace Crawler2._0.Forms
 
 
                 pictureBox1.Load("Data/Pictures/ajax-loader.gif");
-                lblTitle.Text = "Title: " + manga.Title;
-                lblPages.Text = "Pages: " + manga.Pages;
-                lblInfo.Text = "Site: "+manga.Website;
+                lblTitle.Text = Strings.manga_Title_String + manga.Title;
+                lblPages.Text = Strings.manga_Pages_String + manga.Pages;
+                lblInfo.Text = Strings.manga_Site_String + manga.Website;
                 if (manga.Tags != null)
                 {
                     foreach (var x in manga.Tags)
@@ -380,16 +343,14 @@ namespace Crawler2._0.Forms
                             pictureBox1.Image = img;
 
 
-
                             var imgPath = "Data/Pictures/Covers/" + manga.Website + "/" + manga.UniqueId + "-" +
                                           filename;
 
-                            using (WebClient client = new WebClient())
+                            using (var client = new WebClient())
                             {
-                                client.DownloadFile(new Uri(manga.CoverUrl),imgPath );
+                                client.DownloadFile(new Uri(manga.CoverUrl), imgPath);
                             }
                             //img.Save(imgPath);
-                            
                         }
                         Cursor.Current = Cursors.Default;
                         //anga.LocalImage = true;
@@ -398,7 +359,7 @@ namespace Crawler2._0.Forms
                 }
                 else
                 {
-                    var imgPath =  "Data/Pictures/Covers/" + manga.Website + "/" + manga.UniqueId +"-"+filename;
+                    var imgPath = "Data/Pictures/Covers/" + manga.Website + "/" + manga.UniqueId + "-" + filename;
                     pictureBox1.ImageLocation = imgPath;
                 }
             }
@@ -411,13 +372,11 @@ namespace Crawler2._0.Forms
             if (((CheckBox) sender).Checked)
             {
                 var dialogResult =
-                    MessageBox.Show("This will make the process much slower, are you sure you want to enable this?", "",
+                    MessageBox.Show(Strings.Download_covers_String, "",
                         MessageBoxButtons.YesNo);
                 ((CheckBox) sender).Checked = dialogResult == DialogResult.Yes;
             }
         }
-
-      
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -441,11 +400,9 @@ namespace Crawler2._0.Forms
             ListviewMangas.SetObjects(list);
             ListviewMangas.ModelFilter = new ModelFilter(delegate(object x)
             {
-                if (((Manga)x).Website == WebsiteDropdown.SelectedItem.ToString())
+                if (((Manga) x).Website == WebsiteDropdown.SelectedItem.ToString())
                     return true;
-                else
-                    return false;
-
+                return false;
             });
             //ListviewMangas.Objects = list;
         }
@@ -455,7 +412,7 @@ namespace Crawler2._0.Forms
             if (ListviewMangas.SelectedItem != null)
             {
                 var index = ListviewMangas.SelectedIndex;
-               
+
                 var m = (Manga) ListviewMangas.VirtualListDataSource.GetNthObject(index);
                 //ThreadPool.QueueUserWorkItem(ShowMangaInfo, m);
                 TagListbox.Items.Clear();
@@ -469,8 +426,6 @@ namespace Crawler2._0.Forms
             ContextmenuMangalist.Show(MousePosition);
         }
 
-       
-
         private void ListviewCompletedDownloads_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -481,10 +436,8 @@ namespace Crawler2._0.Forms
 
         public void AddCustomTag(string text)
         {
-            
-
             TextboxCustomFilter.AppendText(text + ";");
-            
+
             ApplyFilter();
         }
 
@@ -499,10 +452,6 @@ namespace Crawler2._0.Forms
             if (e.KeyCode == Keys.Enter)
                 ApplyFilter();
         }
-
-     
-
-       
 
         private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
         {
@@ -564,17 +513,26 @@ namespace Crawler2._0.Forms
             //e.Node.Remove();
         }
 
-        
-
         private void WebsiteDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
             ClearInfoBox();
 
-            //string selectedText = WebsiteDropdown.SelectedValue.ToString();
-            DownloadButton.Text = "Download List(" + WebsiteDropdown.SelectedItem + ")";
-            //FilterByWebsite(WebsiteDropdown.SelectedItem.ToString());
+            DownloadButton.Text = string.Format("Download List({0})",WebsiteDropdown.SelectedItem);
             InitializeList(_mangaList);
             ListviewMangas.SelectObject(0);
+        }
+
+        private void showMangasWithoutThisTagToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var selectedTag = TagListbox.SelectedItem.ToString();
+            AddCustomTag("!" + selectedTag);
+        }
+
+        private void ClearFilterButton_Click(object sender, EventArgs e)
+        {
+            TextboxCustomFilter.Clear();
+            FilterByWebsite(WebsiteDropdown.SelectedText);
+            ApplyFilter();
         }
 
         #region FilterRegion
@@ -588,7 +546,7 @@ namespace Crawler2._0.Forms
         {
             if (_filteredList.Count != 0)
             {
-                List<Manga> tempList = new List<Manga>();
+                var tempList = new List<Manga>();
                 foreach (var m in _filteredList)
                 {
                     if (m.Website == website)
@@ -604,13 +562,11 @@ namespace Crawler2._0.Forms
                         _filteredList.Add(m);
                 }
             }
-            
-
         }
 
         public void FilterByPages()
         {
-           // _filteredList.Clear();
+            // _filteredList.Clear();
             _filteredList = new List<Manga>();
             //ListviewMangas.Clear();
             if (CheckboxFilterByPages.Checked)
@@ -727,10 +683,9 @@ namespace Crawler2._0.Forms
                     var newList = _filteredList.Where(x => !x.Tags.Contains(z)).ToList();
                     _filteredList = newList;
                 }
-
             }
-            int filteredOut = _mangaList.Count - _filteredList.Count;
-            labelFilteredOut.Text = "Filtered out "+filteredOut+" mangas";
+            var filteredOut = _mangaList.Count - _filteredList.Count;
+            labelFilteredOut.Text = "Filtered out " + filteredOut + " mangas";
         }
 
         public void FilterOutDownloaded()
@@ -744,7 +699,6 @@ namespace Crawler2._0.Forms
 
         public void ApplyFilter()
         {
-            
             FilterByPages();
             FilterByTags();
             FilterOutDownloaded();
@@ -752,7 +706,7 @@ namespace Crawler2._0.Forms
             InitializeList(_filteredList);
             ClearInfoBox();
             ListviewMangas.SelectedIndex = 0;
-            if(ListviewMangas.SelectedObject != null)
+            if (ListviewMangas.SelectedObject != null)
                 ShowMangaInfo(ListviewMangas.SelectedObject);
         }
 
@@ -760,24 +714,7 @@ namespace Crawler2._0.Forms
 
         #region EventMetoder
 
-        private void _listhandler_TagListLineRead(int key, string value)
-        {
-            _tagDictionary.Add(key, value);
-        } //Happens after a line in tagfile is read
-
-        private void _listhandler_MangaListReadFinished()
-        {
-           // ListviewMangas.SetObjects(_mangaList.ToArray());
-        } //Happens when the manga list file read is finished
-
-        private void _listhandler_MangaListRead(Manga m) //Happens when each manga from the file is read
-        {
-            if (m.Pages > MaxPages)
-                MaxPages = m.Pages;
-
-            _mangaList.Add(m);
-        } //
-
+        
         private void _listhandler_CompletedLineRead(string title, string date, string status, string timeTaken)
         {
             if (!InvokeRequired)
@@ -810,7 +747,7 @@ namespace Crawler2._0.Forms
             if (!InvokeRequired)
             {
                 ToolstripProgress.Value = int.Parse(Math.Truncate(percentage).ToString());
-                ToolstripLabel.Text = percentage+"%";
+                ToolstripLabel.Text = percentage + "%";
             }
             else
                 Invoke(new Action(() => _crawler_CrawlingUpdateProgressEvent(percentage)));
@@ -832,8 +769,6 @@ namespace Crawler2._0.Forms
             if (!InvokeRequired)
             {
                 FilterByWebsite(WebsiteDropdown.SelectedItem.ToString());
-                
-                //ListviewMangas.Sort(((OLVColumn)ListviewMangas.Columns[0]),SortOrder.Ascending);
 
                 _mangaList = list;
                 FilterByTags();
@@ -848,17 +783,9 @@ namespace Crawler2._0.Forms
 
             else
                 Invoke(new Action(() => _crawler_MangalistFinishedCrawlingEvent(list)));
-        } //Happens when crawling is completed
+        }  
 
-        private void _crawler_MangaListCrawlingFailedEvent(string url)
-        {
-            if (!InvokeRequired)
-                MessageBox.Show("Failed at getting the website " + url +
-                                ". Make sure the website is up and running and try again");
-            else
-                Invoke(new Action(() => _crawler_MangaListCrawlingFailedEvent(url)));
-        } //Happens if the crawler fails on a particular url
-
+     
 
         private void _crawler_PictureCrawlingStartedEvent(string title, string status, string percentage, string pages)
         {
@@ -897,8 +824,6 @@ namespace Crawler2._0.Forms
                 Invoke(new Action(() => _crawler_PictureCrawlingUpdateProgressEvent(title, pageCount, queueCount)));
             }
 
-            //this.Invoke(new Action(() => ListviewCurrentDownloads.Items[index].SubItems[2].Text = Percentage));
-            //this.Invoke(new Action(() => ListviewCurrentDownloads.Items[index].SubItems[1].Text = finished + " / " + pageCount));
         } //Happens when picture url has been crawled.
 
 
@@ -935,7 +860,7 @@ namespace Crawler2._0.Forms
                 var subItemDate = new ListViewItem.ListViewSubItem();
                 var subItemTimetaken = new ListViewItem.ListViewSubItem();
 
-                subItemState.Text = "Downloaded";
+                subItemState.Text = Strings.MangaDownloadFinishedEvent_Downloaded_string;
                 subItemDate.Text = time.ToString(CultureInfo.CurrentCulture);
                 subItemTimetaken.Text = timeTaken;
 
@@ -964,7 +889,7 @@ namespace Crawler2._0.Forms
             {
                 var index = ListviewCurrentDownloads.FindItemWithText(title).Index;
 
-                ListviewCurrentDownloads.Items[index].SubItems[1].Text = "Downloading";
+                ListviewCurrentDownloads.Items[index].SubItems[1].Text = Strings.PictureDownloadStartedEvent_Downloading;
                 ListviewCurrentDownloads.Items[index].SubItems[2].Text = "0.0 %";
                 ListviewCurrentDownloads.Items[index].SubItems[3].Text = "0 / " + pages;
             }
@@ -975,48 +900,28 @@ namespace Crawler2._0.Forms
         }
 
         #endregion
-
-        private void showMangasWithoutThisTagToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var selectedTag = TagListbox.SelectedItem.ToString();
-            AddCustomTag("!"+selectedTag);
-        }
-
-        private void ClearFilterButton_Click(object sender, EventArgs e)
-        {
-            TextboxCustomFilter.Clear();
-            FilterByWebsite(WebsiteDropdown.SelectedText);
-            ApplyFilter();
-            
-        }
-
-       
-
-       
-
     }
 
     public interface IModelFilter
     {
-        bool Filter(object modelObject,string website);
+        bool Filter(object modelObject, string website);
     }
 
     public interface IListFilter
     {
         IEnumerable Filter(IEnumerable modelObjects);
     }
-   
+
     public class SiteFilter : IModelFilter
     {
-        public bool Filter(object modelObject,string website)
+        public bool Filter(object modelObject, string website)
         {
             if (((Manga) modelObject).Website == website)
                 return true;
-            else
-                return false;
+            return false;
         }
-       
     }
+
     internal class Manga
     {
         public string Title { get; set; }
@@ -1079,8 +984,6 @@ namespace Crawler2._0.Forms
         {
             _objects = objectList;
         }
-
-        
 
         public override int GetObjectIndex(object model)
         {

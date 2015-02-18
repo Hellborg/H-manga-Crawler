@@ -33,6 +33,7 @@ namespace Crawler2._0.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.DownloadButton = new System.Windows.Forms.Button();
             this.tabcontrolMain = new System.Windows.Forms.TabControl();
             this.TabpageInfo = new System.Windows.Forms.TabPage();
@@ -144,27 +145,19 @@ namespace Crawler2._0.Forms
             // 
             // DownloadButton
             // 
-            this.DownloadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.DownloadButton.Location = new System.Drawing.Point(124, 27);
+            resources.ApplyResources(this.DownloadButton, "DownloadButton");
             this.DownloadButton.Name = "DownloadButton";
-            this.DownloadButton.Size = new System.Drawing.Size(202, 26);
-            this.DownloadButton.TabIndex = 1;
             this.DownloadButton.UseVisualStyleBackColor = true;
             this.DownloadButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // tabcontrolMain
             // 
-            this.tabcontrolMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.tabcontrolMain, "tabcontrolMain");
             this.tabcontrolMain.Controls.Add(this.TabpageInfo);
             this.tabcontrolMain.Controls.Add(this.TabpageOptions);
             this.tabcontrolMain.Controls.Add(this.TabpageDownloads);
-            this.tabcontrolMain.Location = new System.Drawing.Point(332, 27);
             this.tabcontrolMain.Name = "tabcontrolMain";
             this.tabcontrolMain.SelectedIndex = 0;
-            this.tabcontrolMain.Size = new System.Drawing.Size(774, 634);
-            this.tabcontrolMain.TabIndex = 4;
             // 
             // TabpageInfo
             // 
@@ -176,68 +169,45 @@ namespace Crawler2._0.Forms
             this.TabpageInfo.Controls.Add(this.lblPages);
             this.TabpageInfo.Controls.Add(this.lblTitle);
             this.TabpageInfo.Controls.Add(this.pictureBox1);
-            this.TabpageInfo.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.TabpageInfo, "TabpageInfo");
             this.TabpageInfo.Name = "TabpageInfo";
-            this.TabpageInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.TabpageInfo.Size = new System.Drawing.Size(766, 608);
-            this.TabpageInfo.TabIndex = 0;
-            this.TabpageInfo.Text = "Information";
             this.TabpageInfo.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Controls.Add(this.ClearFilterButton);
             this.groupBox3.Controls.Add(this.ApplyFilterButton);
             this.groupBox3.Controls.Add(this.FilterCheckbox_downloaded);
             this.groupBox3.Controls.Add(this.groupBoxTags);
             this.groupBox3.Controls.Add(this.numericFilterPageCount);
             this.groupBox3.Controls.Add(this.CheckboxFilterByPages);
-            this.groupBox3.Location = new System.Drawing.Point(9, 316);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(751, 286);
-            this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Filter";
             // 
             // ClearFilterButton
             // 
-            this.ClearFilterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ClearFilterButton.Location = new System.Drawing.Point(563, 251);
+            resources.ApplyResources(this.ClearFilterButton, "ClearFilterButton");
             this.ClearFilterButton.Name = "ClearFilterButton";
-            this.ClearFilterButton.Size = new System.Drawing.Size(88, 29);
-            this.ClearFilterButton.TabIndex = 23;
-            this.ClearFilterButton.Text = "Clear filter";
             this.ClearFilterButton.UseVisualStyleBackColor = true;
             this.ClearFilterButton.Click += new System.EventHandler(this.ClearFilterButton_Click);
             // 
             // ApplyFilterButton
             // 
-            this.ApplyFilterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ApplyFilterButton.Location = new System.Drawing.Point(657, 251);
+            resources.ApplyResources(this.ApplyFilterButton, "ApplyFilterButton");
             this.ApplyFilterButton.Name = "ApplyFilterButton";
-            this.ApplyFilterButton.Size = new System.Drawing.Size(88, 29);
-            this.ApplyFilterButton.TabIndex = 22;
-            this.ApplyFilterButton.Text = "Apply filter";
             this.ApplyFilterButton.UseVisualStyleBackColor = true;
             this.ApplyFilterButton.Click += new System.EventHandler(this.ApplyFilterButton_Click);
             // 
             // FilterCheckbox_downloaded
             // 
-            this.FilterCheckbox_downloaded.AutoSize = true;
-            this.FilterCheckbox_downloaded.Location = new System.Drawing.Point(6, 251);
+            resources.ApplyResources(this.FilterCheckbox_downloaded, "FilterCheckbox_downloaded");
             this.FilterCheckbox_downloaded.Name = "FilterCheckbox_downloaded";
-            this.FilterCheckbox_downloaded.Size = new System.Drawing.Size(199, 17);
-            this.FilterCheckbox_downloaded.TabIndex = 21;
-            this.FilterCheckbox_downloaded.Text = "Filter out already downloaded manga";
             this.FilterCheckbox_downloaded.UseVisualStyleBackColor = true;
             // 
             // groupBoxTags
             // 
-            this.groupBoxTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.groupBoxTags, "groupBoxTags");
             this.groupBoxTags.Controls.Add(this.labelFilteredOut);
             this.groupBoxTags.Controls.Add(this.FilterCheckbox_12);
             this.groupBoxTags.Controls.Add(this.FilterCheckbox_11);
@@ -253,251 +223,158 @@ namespace Crawler2._0.Forms
             this.groupBoxTags.Controls.Add(this.TagCheckbox_1);
             this.groupBoxTags.Controls.Add(this.label5);
             this.groupBoxTags.Controls.Add(this.TextboxCustomFilter);
-            this.groupBoxTags.Location = new System.Drawing.Point(6, 42);
             this.groupBoxTags.Name = "groupBoxTags";
-            this.groupBoxTags.Size = new System.Drawing.Size(739, 203);
-            this.groupBoxTags.TabIndex = 20;
             this.groupBoxTags.TabStop = false;
-            this.groupBoxTags.Text = "Tags";
             // 
             // labelFilteredOut
             // 
-            this.labelFilteredOut.AutoSize = true;
-            this.labelFilteredOut.Location = new System.Drawing.Point(304, 180);
+            resources.ApplyResources(this.labelFilteredOut, "labelFilteredOut");
             this.labelFilteredOut.Name = "labelFilteredOut";
-            this.labelFilteredOut.Size = new System.Drawing.Size(62, 13);
-            this.labelFilteredOut.TabIndex = 17;
-            this.labelFilteredOut.Text = "Filtered out ";
             // 
             // FilterCheckbox_12
             // 
-            this.FilterCheckbox_12.AutoSize = true;
-            this.FilterCheckbox_12.Location = new System.Drawing.Point(102, 134);
+            resources.ApplyResources(this.FilterCheckbox_12, "FilterCheckbox_12");
             this.FilterCheckbox_12.Name = "FilterCheckbox_12";
-            this.FilterCheckbox_12.Size = new System.Drawing.Size(63, 17);
-            this.FilterCheckbox_12.TabIndex = 16;
-            this.FilterCheckbox_12.Text = "Lingerie";
             this.FilterCheckbox_12.ThreeState = true;
             this.FilterCheckbox_12.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_11
             // 
-            this.FilterCheckbox_11.AutoSize = true;
-            this.FilterCheckbox_11.Location = new System.Drawing.Point(102, 111);
+            resources.ApplyResources(this.FilterCheckbox_11, "FilterCheckbox_11");
             this.FilterCheckbox_11.Name = "FilterCheckbox_11";
-            this.FilterCheckbox_11.Size = new System.Drawing.Size(69, 17);
-            this.FilterCheckbox_11.TabIndex = 15;
-            this.FilterCheckbox_11.Text = "Pregnant";
             this.FilterCheckbox_11.ThreeState = true;
             this.FilterCheckbox_11.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_10
             // 
-            this.FilterCheckbox_10.AutoSize = true;
-            this.FilterCheckbox_10.Location = new System.Drawing.Point(102, 88);
+            resources.ApplyResources(this.FilterCheckbox_10, "FilterCheckbox_10");
             this.FilterCheckbox_10.Name = "FilterCheckbox_10";
-            this.FilterCheckbox_10.Size = new System.Drawing.Size(84, 17);
-            this.FilterCheckbox_10.TabIndex = 14;
-            this.FilterCheckbox_10.Text = "Uncensored";
             this.FilterCheckbox_10.ThreeState = true;
             this.FilterCheckbox_10.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_9
             // 
-            this.FilterCheckbox_9.AutoSize = true;
-            this.FilterCheckbox_9.Location = new System.Drawing.Point(102, 65);
+            resources.ApplyResources(this.FilterCheckbox_9, "FilterCheckbox_9");
             this.FilterCheckbox_9.Name = "FilterCheckbox_9";
-            this.FilterCheckbox_9.Size = new System.Drawing.Size(69, 17);
-            this.FilterCheckbox_9.TabIndex = 13;
-            this.FilterCheckbox_9.Text = "Bondage";
             this.FilterCheckbox_9.ThreeState = true;
             this.FilterCheckbox_9.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_8
             // 
-            this.FilterCheckbox_8.AutoSize = true;
-            this.FilterCheckbox_8.Location = new System.Drawing.Point(102, 42);
+            resources.ApplyResources(this.FilterCheckbox_8, "FilterCheckbox_8");
             this.FilterCheckbox_8.Name = "FilterCheckbox_8";
-            this.FilterCheckbox_8.Size = new System.Drawing.Size(87, 17);
-            this.FilterCheckbox_8.TabIndex = 12;
-            this.FilterCheckbox_8.Text = "Masturbation";
             this.FilterCheckbox_8.ThreeState = true;
             this.FilterCheckbox_8.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_7
             // 
-            this.FilterCheckbox_7.AutoSize = true;
-            this.FilterCheckbox_7.Location = new System.Drawing.Point(102, 19);
+            resources.ApplyResources(this.FilterCheckbox_7, "FilterCheckbox_7");
             this.FilterCheckbox_7.Name = "FilterCheckbox_7";
-            this.FilterCheckbox_7.Size = new System.Drawing.Size(60, 17);
-            this.FilterCheckbox_7.TabIndex = 11;
-            this.FilterCheckbox_7.Text = "English";
             this.FilterCheckbox_7.ThreeState = true;
             this.FilterCheckbox_7.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_6
             // 
-            this.FilterCheckbox_6.AutoSize = true;
-            this.FilterCheckbox_6.Location = new System.Drawing.Point(6, 134);
+            resources.ApplyResources(this.FilterCheckbox_6, "FilterCheckbox_6");
             this.FilterCheckbox_6.Name = "FilterCheckbox_6";
-            this.FilterCheckbox_6.Size = new System.Drawing.Size(47, 17);
-            this.FilterCheckbox_6.TabIndex = 10;
-            this.FilterCheckbox_6.Text = "Anal";
             this.FilterCheckbox_6.ThreeState = true;
             this.FilterCheckbox_6.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_5
             // 
-            this.FilterCheckbox_5.AutoSize = true;
-            this.FilterCheckbox_5.Location = new System.Drawing.Point(6, 111);
+            resources.ApplyResources(this.FilterCheckbox_5, "FilterCheckbox_5");
             this.FilterCheckbox_5.Name = "FilterCheckbox_5";
-            this.FilterCheckbox_5.Size = new System.Drawing.Size(50, 17);
-            this.FilterCheckbox_5.TabIndex = 9;
-            this.FilterCheckbox_5.Text = "MILF";
             this.FilterCheckbox_5.ThreeState = true;
             this.FilterCheckbox_5.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_4
             // 
-            this.FilterCheckbox_4.AutoSize = true;
-            this.FilterCheckbox_4.Location = new System.Drawing.Point(6, 88);
+            resources.ApplyResources(this.FilterCheckbox_4, "FilterCheckbox_4");
             this.FilterCheckbox_4.Name = "FilterCheckbox_4";
-            this.FilterCheckbox_4.Size = new System.Drawing.Size(44, 17);
-            this.FilterCheckbox_4.TabIndex = 8;
-            this.FilterCheckbox_4.Text = "Yuri";
             this.FilterCheckbox_4.ThreeState = true;
             this.FilterCheckbox_4.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_3
             // 
-            this.FilterCheckbox_3.AutoSize = true;
-            this.FilterCheckbox_3.Location = new System.Drawing.Point(6, 65);
+            resources.ApplyResources(this.FilterCheckbox_3, "FilterCheckbox_3");
             this.FilterCheckbox_3.Name = "FilterCheckbox_3";
-            this.FilterCheckbox_3.Size = new System.Drawing.Size(71, 17);
-            this.FilterCheckbox_3.TabIndex = 7;
-            this.FilterCheckbox_3.Text = "Groupsex";
             this.FilterCheckbox_3.ThreeState = true;
             this.FilterCheckbox_3.UseVisualStyleBackColor = true;
             // 
             // FilterCheckbox_2
             // 
-            this.FilterCheckbox_2.AutoSize = true;
-            this.FilterCheckbox_2.Location = new System.Drawing.Point(6, 42);
+            resources.ApplyResources(this.FilterCheckbox_2, "FilterCheckbox_2");
             this.FilterCheckbox_2.Name = "FilterCheckbox_2";
-            this.FilterCheckbox_2.Size = new System.Drawing.Size(63, 17);
-            this.FilterCheckbox_2.TabIndex = 6;
-            this.FilterCheckbox_2.Text = "Blowjob";
             this.FilterCheckbox_2.ThreeState = true;
             this.FilterCheckbox_2.UseVisualStyleBackColor = true;
             // 
             // TagCheckbox_1
             // 
-            this.TagCheckbox_1.AutoSize = true;
-            this.TagCheckbox_1.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.TagCheckbox_1, "TagCheckbox_1");
             this.TagCheckbox_1.Name = "TagCheckbox_1";
-            this.TagCheckbox_1.Size = new System.Drawing.Size(90, 17);
-            this.TagCheckbox_1.TabIndex = 5;
-            this.TagCheckbox_1.Text = "Large breasts";
             this.TagCheckbox_1.ThreeState = true;
             this.TagCheckbox_1.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 161);
+            resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(141, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Custom filter. Separate with ;";
             // 
             // TextboxCustomFilter
             // 
-            this.TextboxCustomFilter.Location = new System.Drawing.Point(6, 177);
+            resources.ApplyResources(this.TextboxCustomFilter, "TextboxCustomFilter");
             this.TextboxCustomFilter.Name = "TextboxCustomFilter";
-            this.TextboxCustomFilter.Size = new System.Drawing.Size(274, 20);
-            this.TextboxCustomFilter.TabIndex = 3;
             this.TextboxCustomFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextboxCustomFilter_KeyDown);
             // 
             // numericFilterPageCount
             // 
-            this.numericFilterPageCount.Location = new System.Drawing.Point(190, 18);
+            resources.ApplyResources(this.numericFilterPageCount, "numericFilterPageCount");
             this.numericFilterPageCount.Name = "numericFilterPageCount";
-            this.numericFilterPageCount.Size = new System.Drawing.Size(45, 20);
-            this.numericFilterPageCount.TabIndex = 19;
             // 
             // CheckboxFilterByPages
             // 
-            this.CheckboxFilterByPages.AutoSize = true;
-            this.CheckboxFilterByPages.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.CheckboxFilterByPages, "CheckboxFilterByPages");
             this.CheckboxFilterByPages.Name = "CheckboxFilterByPages";
-            this.CheckboxFilterByPages.Size = new System.Drawing.Size(274, 17);
-            this.CheckboxFilterByPages.TabIndex = 18;
-            this.CheckboxFilterByPages.Text = "Show only mangas with more than                   Pages";
             this.CheckboxFilterByPages.UseVisualStyleBackColor = true;
             // 
             // TagListbox
             // 
             this.TagListbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TagListbox.FormattingEnabled = true;
-            this.TagListbox.Location = new System.Drawing.Point(302, 96);
+            resources.ApplyResources(this.TagListbox, "TagListbox");
             this.TagListbox.Name = "TagListbox";
-            this.TagListbox.Size = new System.Drawing.Size(297, 195);
-            this.TagListbox.TabIndex = 6;
             this.TagListbox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TagListbox_MouseUp);
             // 
             // lblInfo
             // 
-            this.lblInfo.AutoSize = true;
-            this.lblInfo.Location = new System.Drawing.Point(302, 297);
+            resources.ApplyResources(this.lblInfo, "lblInfo");
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(35, 13);
-            this.lblInfo.TabIndex = 5;
-            this.lblInfo.Text = "label1";
             // 
             // lblTags
             // 
-            this.lblTags.AutoSize = true;
-            this.lblTags.Location = new System.Drawing.Point(302, 80);
+            resources.ApplyResources(this.lblTags, "lblTags");
             this.lblTags.Name = "lblTags";
-            this.lblTags.Size = new System.Drawing.Size(31, 13);
-            this.lblTags.TabIndex = 4;
-            this.lblTags.Text = "Tags";
             // 
             // lblLanguage
             // 
-            this.lblLanguage.AutoSize = true;
-            this.lblLanguage.Location = new System.Drawing.Point(302, 54);
+            resources.ApplyResources(this.lblLanguage, "lblLanguage");
             this.lblLanguage.Name = "lblLanguage";
-            this.lblLanguage.Size = new System.Drawing.Size(35, 13);
-            this.lblLanguage.TabIndex = 3;
-            this.lblLanguage.Text = "label1";
-            this.lblLanguage.Visible = false;
             // 
             // lblPages
             // 
-            this.lblPages.AutoSize = true;
-            this.lblPages.Location = new System.Drawing.Point(302, 29);
+            resources.ApplyResources(this.lblPages, "lblPages");
             this.lblPages.Name = "lblPages";
-            this.lblPages.Size = new System.Drawing.Size(35, 13);
-            this.lblPages.TabIndex = 2;
-            this.lblPages.Text = "label1";
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(302, 5);
+            resources.ApplyResources(this.lblTitle, "lblTitle");
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(35, 13);
-            this.lblTitle.TabIndex = 1;
-            this.lblTitle.Text = "label1";
             // 
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(9, 5);
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(287, 305);
-            this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // TabpageOptions
@@ -506,33 +383,24 @@ namespace Crawler2._0.Forms
             this.TabpageOptions.Controls.Add(this.groupBox2);
             this.TabpageOptions.Controls.Add(this.SaveOptionsButton);
             this.TabpageOptions.Controls.Add(this.groupBox1);
-            this.TabpageOptions.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.TabpageOptions, "TabpageOptions");
             this.TabpageOptions.Name = "TabpageOptions";
-            this.TabpageOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.TabpageOptions.Size = new System.Drawing.Size(766, 608);
-            this.TabpageOptions.TabIndex = 2;
-            this.TabpageOptions.Text = "Options";
             this.TabpageOptions.UseVisualStyleBackColor = true;
             this.TabpageOptions.Enter += new System.EventHandler(this.TabpageOptions_Enter);
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.treeView1);
-            this.groupBox4.Location = new System.Drawing.Point(414, 10);
+            resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(346, 382);
-            this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Websites";
             // 
             // treeView1
             // 
             this.treeView1.CheckBoxes = true;
             this.treeView1.LabelEdit = true;
-            this.treeView1.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.treeView1, "treeView1");
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(340, 292);
-            this.treeView1.TabIndex = 0;
             this.treeView1.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView1_AfterLabelEdit);
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
             // 
@@ -547,100 +415,64 @@ namespace Crawler2._0.Forms
             this.groupBox2.Controls.Add(this.SelectFolderButton);
             this.groupBox2.Controls.Add(this.SelectedPathTextbox);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(6, 202);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(402, 190);
-            this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Downloader";
             // 
             // createSiteFolderCheckbox
             // 
-            this.createSiteFolderCheckbox.AutoSize = true;
-            this.createSiteFolderCheckbox.Location = new System.Drawing.Point(9, 81);
+            resources.ApplyResources(this.createSiteFolderCheckbox, "createSiteFolderCheckbox");
             this.createSiteFolderCheckbox.Name = "createSiteFolderCheckbox";
-            this.createSiteFolderCheckbox.Size = new System.Drawing.Size(167, 17);
-            this.createSiteFolderCheckbox.TabIndex = 7;
-            this.createSiteFolderCheckbox.Text = "Create folder for each website";
             this.createSiteFolderCheckbox.UseVisualStyleBackColor = true;
             // 
             // LabelExampleName
             // 
-            this.LabelExampleName.AutoSize = true;
-            this.LabelExampleName.Location = new System.Drawing.Point(219, 167);
+            resources.ApplyResources(this.LabelExampleName, "LabelExampleName");
             this.LabelExampleName.Name = "LabelExampleName";
-            this.LabelExampleName.Size = new System.Drawing.Size(0, 13);
-            this.LabelExampleName.TabIndex = 11;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(163, 167);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Example:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 148);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Chapter folder name";
             // 
             // NamingSchemeTextbox
             // 
-            this.NamingSchemeTextbox.Location = new System.Drawing.Point(9, 164);
+            resources.ApplyResources(this.NamingSchemeTextbox, "NamingSchemeTextbox");
             this.NamingSchemeTextbox.Name = "NamingSchemeTextbox";
-            this.NamingSchemeTextbox.Size = new System.Drawing.Size(148, 20);
-            this.NamingSchemeTextbox.TabIndex = 9;
             // 
             // CreateSubfoldersCheckbox
             // 
-            this.CreateSubfoldersCheckbox.AutoSize = true;
-            this.CreateSubfoldersCheckbox.Location = new System.Drawing.Point(9, 43);
+            resources.ApplyResources(this.CreateSubfoldersCheckbox, "CreateSubfoldersCheckbox");
             this.CreateSubfoldersCheckbox.Name = "CreateSubfoldersCheckbox";
-            this.CreateSubfoldersCheckbox.Size = new System.Drawing.Size(168, 17);
-            this.CreateSubfoldersCheckbox.TabIndex = 8;
-            this.CreateSubfoldersCheckbox.Text = "Create folders for each manga";
             this.CreateSubfoldersCheckbox.UseVisualStyleBackColor = true;
             // 
             // SelectFolderButton
             // 
-            this.SelectFolderButton.Location = new System.Drawing.Point(298, 16);
+            resources.ApplyResources(this.SelectFolderButton, "SelectFolderButton");
             this.SelectFolderButton.Name = "SelectFolderButton";
-            this.SelectFolderButton.Size = new System.Drawing.Size(86, 24);
-            this.SelectFolderButton.TabIndex = 7;
-            this.SelectFolderButton.Text = "Select Folder";
             this.SelectFolderButton.UseVisualStyleBackColor = true;
             this.SelectFolderButton.Click += new System.EventHandler(this.SelectFolderButton_Click);
             // 
             // SelectedPathTextbox
             // 
-            this.SelectedPathTextbox.Location = new System.Drawing.Point(126, 17);
+            resources.ApplyResources(this.SelectedPathTextbox, "SelectedPathTextbox");
             this.SelectedPathTextbox.Name = "SelectedPathTextbox";
             this.SelectedPathTextbox.ReadOnly = true;
-            this.SelectedPathTextbox.Size = new System.Drawing.Size(166, 20);
-            this.SelectedPathTextbox.TabIndex = 1;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 20);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Default download path";
             // 
             // SaveOptionsButton
             // 
-            this.SaveOptionsButton.Location = new System.Drawing.Point(6, 562);
+            resources.ApplyResources(this.SaveOptionsButton, "SaveOptionsButton");
             this.SaveOptionsButton.Name = "SaveOptionsButton";
-            this.SaveOptionsButton.Size = new System.Drawing.Size(120, 40);
-            this.SaveOptionsButton.TabIndex = 2;
-            this.SaveOptionsButton.Text = "Save";
             this.SaveOptionsButton.UseVisualStyleBackColor = true;
             this.SaveOptionsButton.Click += new System.EventHandler(this.SaveOptionsButton_Click);
             // 
@@ -651,41 +483,28 @@ namespace Crawler2._0.Forms
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.numericRetryTime);
             this.groupBox1.Controls.Add(this.SaveCoversCheckbox);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(402, 190);
-            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "General";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 79);
+            resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(120, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Remembered filter string";
             // 
             // textboxRememberedFilter
             // 
-            this.textboxRememberedFilter.Location = new System.Drawing.Point(129, 76);
+            resources.ApplyResources(this.textboxRememberedFilter, "textboxRememberedFilter");
             this.textboxRememberedFilter.Name = "textboxRememberedFilter";
-            this.textboxRememberedFilter.Size = new System.Drawing.Size(267, 20);
-            this.textboxRememberedFilter.TabIndex = 7;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 44);
+            resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(108, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Time between retrys: ";
             // 
             // numericRetryTime
             // 
-            this.numericRetryTime.Location = new System.Drawing.Point(120, 42);
+            resources.ApplyResources(this.numericRetryTime, "numericRetryTime");
             this.numericRetryTime.Maximum = new decimal(new int[] {
             10,
             0,
@@ -697,8 +516,6 @@ namespace Crawler2._0.Forms
             0,
             0});
             this.numericRetryTime.Name = "numericRetryTime";
-            this.numericRetryTime.Size = new System.Drawing.Size(120, 20);
-            this.numericRetryTime.TabIndex = 5;
             this.numericRetryTime.Value = new decimal(new int[] {
             1,
             0,
@@ -707,23 +524,16 @@ namespace Crawler2._0.Forms
             // 
             // SaveCoversCheckbox
             // 
-            this.SaveCoversCheckbox.AutoSize = true;
-            this.SaveCoversCheckbox.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.SaveCoversCheckbox, "SaveCoversCheckbox");
             this.SaveCoversCheckbox.Name = "SaveCoversCheckbox";
-            this.SaveCoversCheckbox.Size = new System.Drawing.Size(120, 17);
-            this.SaveCoversCheckbox.TabIndex = 4;
-            this.SaveCoversCheckbox.Text = "Save covers to disk";
             this.SaveCoversCheckbox.UseVisualStyleBackColor = true;
             this.SaveCoversCheckbox.CheckedChanged += new System.EventHandler(this.SaveCoversCheckbox_CheckedChanged);
             // 
             // TabpageDownloads
             // 
             this.TabpageDownloads.Controls.Add(this.TabcontrolDownloads);
-            this.TabpageDownloads.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.TabpageDownloads, "TabpageDownloads");
             this.TabpageDownloads.Name = "TabpageDownloads";
-            this.TabpageDownloads.Size = new System.Drawing.Size(766, 608);
-            this.TabpageDownloads.TabIndex = 3;
-            this.TabpageDownloads.Text = "Downloads";
             this.TabpageDownloads.UseVisualStyleBackColor = true;
             // 
             // TabcontrolDownloads
@@ -731,22 +541,15 @@ namespace Crawler2._0.Forms
             this.TabcontrolDownloads.Controls.Add(this.tabPage1);
             this.TabcontrolDownloads.Controls.Add(this.tabPage2);
             this.TabcontrolDownloads.Controls.Add(this.tabPage3);
-            this.TabcontrolDownloads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabcontrolDownloads.Location = new System.Drawing.Point(0, 0);
+            resources.ApplyResources(this.TabcontrolDownloads, "TabcontrolDownloads");
             this.TabcontrolDownloads.Name = "TabcontrolDownloads";
             this.TabcontrolDownloads.SelectedIndex = 0;
-            this.TabcontrolDownloads.Size = new System.Drawing.Size(766, 608);
-            this.TabcontrolDownloads.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.ListviewCurrentDownloads);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(758, 582);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Current downloads";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // ListviewCurrentDownloads
@@ -756,50 +559,38 @@ namespace Crawler2._0.Forms
             this.StatusColumn_1,
             this.PercentageColumn_1,
             this.PagesColumn_1});
-            this.ListviewCurrentDownloads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ListviewCurrentDownloads.Location = new System.Drawing.Point(3, 3);
+            resources.ApplyResources(this.ListviewCurrentDownloads, "ListviewCurrentDownloads");
             this.ListviewCurrentDownloads.Name = "ListviewCurrentDownloads";
-            this.ListviewCurrentDownloads.Size = new System.Drawing.Size(752, 576);
-            this.ListviewCurrentDownloads.TabIndex = 0;
             this.ListviewCurrentDownloads.UseCompatibleStateImageBehavior = false;
             this.ListviewCurrentDownloads.View = System.Windows.Forms.View.Details;
             // 
             // NameColumn_1
             // 
-            this.NameColumn_1.Text = "Name";
+            resources.ApplyResources(this.NameColumn_1, "NameColumn_1");
             // 
             // StatusColumn_1
             // 
-            this.StatusColumn_1.Text = "Status";
+            resources.ApplyResources(this.StatusColumn_1, "StatusColumn_1");
             // 
             // PercentageColumn_1
             // 
-            this.PercentageColumn_1.Text = "Percentage";
+            resources.ApplyResources(this.PercentageColumn_1, "PercentageColumn_1");
             // 
             // PagesColumn_1
             // 
-            this.PagesColumn_1.Text = "Pages done";
-            this.PagesColumn_1.Width = 80;
+            resources.ApplyResources(this.PagesColumn_1, "PagesColumn_1");
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(758, 582);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Failed downloads";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.ListviewCompletedDownloads);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.tabPage3, "tabPage3");
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(758, 582);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Completed downloads";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // ListviewCompletedDownloads
@@ -809,58 +600,46 @@ namespace Crawler2._0.Forms
             this.StatusColumn_3,
             this.CompletedOnColumn_3,
             this.TimeColumn_3});
-            this.ListviewCompletedDownloads.Dock = System.Windows.Forms.DockStyle.Fill;
+            resources.ApplyResources(this.ListviewCompletedDownloads, "ListviewCompletedDownloads");
             this.ListviewCompletedDownloads.FullRowSelect = true;
-            this.ListviewCompletedDownloads.Location = new System.Drawing.Point(3, 3);
             this.ListviewCompletedDownloads.Name = "ListviewCompletedDownloads";
-            this.ListviewCompletedDownloads.Size = new System.Drawing.Size(752, 576);
-            this.ListviewCompletedDownloads.TabIndex = 1;
             this.ListviewCompletedDownloads.UseCompatibleStateImageBehavior = false;
             this.ListviewCompletedDownloads.View = System.Windows.Forms.View.Details;
             this.ListviewCompletedDownloads.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListviewCompletedDownloads_MouseClick);
             // 
             // NameColumn_3
             // 
-            this.NameColumn_3.Text = "Name";
-            this.NameColumn_3.Width = 250;
+            resources.ApplyResources(this.NameColumn_3, "NameColumn_3");
             // 
             // StatusColumn_3
             // 
-            this.StatusColumn_3.Text = "Status";
-            this.StatusColumn_3.Width = 120;
+            resources.ApplyResources(this.StatusColumn_3, "StatusColumn_3");
             // 
             // CompletedOnColumn_3
             // 
-            this.CompletedOnColumn_3.Text = "Completed on";
-            this.CompletedOnColumn_3.Width = 130;
+            resources.ApplyResources(this.CompletedOnColumn_3, "CompletedOnColumn_3");
             // 
             // TimeColumn_3
             // 
-            this.TimeColumn_3.Text = "Time taken";
-            this.TimeColumn_3.Width = 80;
+            resources.ApplyResources(this.TimeColumn_3, "TimeColumn_3");
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainToolStripMenuItem,
             this.aboutToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1118, 24);
-            this.menuStrip1.TabIndex = 5;
-            this.menuStrip1.Text = "menuStrip1";
             // 
             // mainToolStripMenuItem
             // 
             this.mainToolStripMenuItem.Name = "mainToolStripMenuItem";
-            this.mainToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.mainToolStripMenuItem.Text = "Main";
+            resources.ApplyResources(this.mainToolStripMenuItem, "mainToolStripMenuItem");
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             // 
             // ContextmenuMangalist
             // 
@@ -868,20 +647,18 @@ namespace Crawler2._0.Forms
             this.ToolstripItemGotoGallery,
             this.ToolstripItemDownload});
             this.ContextmenuMangalist.Name = "cmMangalist";
-            this.ContextmenuMangalist.Size = new System.Drawing.Size(153, 70);
+            resources.ApplyResources(this.ContextmenuMangalist, "ContextmenuMangalist");
             // 
             // ToolstripItemGotoGallery
             // 
             this.ToolstripItemGotoGallery.Name = "ToolstripItemGotoGallery";
-            this.ToolstripItemGotoGallery.Size = new System.Drawing.Size(152, 22);
-            this.ToolstripItemGotoGallery.Text = "Go to Gallery";
+            resources.ApplyResources(this.ToolstripItemGotoGallery, "ToolstripItemGotoGallery");
             this.ToolstripItemGotoGallery.Click += new System.EventHandler(this.ToolstripItemGotoGallery_Click);
             // 
             // ToolstripItemDownload
             // 
             this.ToolstripItemDownload.Name = "ToolstripItemDownload";
-            this.ToolstripItemDownload.Size = new System.Drawing.Size(152, 22);
-            this.ToolstripItemDownload.Text = "Download";
+            resources.ApplyResources(this.ToolstripItemDownload, "ToolstripItemDownload");
             this.ToolstripItemDownload.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
             // 
             // ContextmenuTags
@@ -890,20 +667,18 @@ namespace Crawler2._0.Forms
             this.TagToolstripFilterByThis,
             this.showMangasWithoutThisTagToolStripMenuItem});
             this.ContextmenuTags.Name = "ContextmenuTags";
-            this.ContextmenuTags.Size = new System.Drawing.Size(235, 48);
+            resources.ApplyResources(this.ContextmenuTags, "ContextmenuTags");
             // 
             // TagToolstripFilterByThis
             // 
             this.TagToolstripFilterByThis.Name = "TagToolstripFilterByThis";
-            this.TagToolstripFilterByThis.Size = new System.Drawing.Size(234, 22);
-            this.TagToolstripFilterByThis.Text = "Show mangas with this tag";
+            resources.ApplyResources(this.TagToolstripFilterByThis, "TagToolstripFilterByThis");
             this.TagToolstripFilterByThis.Click += new System.EventHandler(this.TagToolstripFilterByThis_Click);
             // 
             // showMangasWithoutThisTagToolStripMenuItem
             // 
             this.showMangasWithoutThisTagToolStripMenuItem.Name = "showMangasWithoutThisTagToolStripMenuItem";
-            this.showMangasWithoutThisTagToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.showMangasWithoutThisTagToolStripMenuItem.Text = "Show mangas without this tag";
+            resources.ApplyResources(this.showMangasWithoutThisTagToolStripMenuItem, "showMangasWithoutThisTagToolStripMenuItem");
             this.showMangasWithoutThisTagToolStripMenuItem.Click += new System.EventHandler(this.showMangasWithoutThisTagToolStripMenuItem_Click);
             // 
             // StatusStrip_Main
@@ -911,25 +686,19 @@ namespace Crawler2._0.Forms
             this.StatusStrip_Main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolstripProgress,
             this.ToolstripLabel});
-            this.StatusStrip_Main.Location = new System.Drawing.Point(0, 664);
+            resources.ApplyResources(this.StatusStrip_Main, "StatusStrip_Main");
             this.StatusStrip_Main.Name = "StatusStrip_Main";
-            this.StatusStrip_Main.Size = new System.Drawing.Size(1118, 22);
-            this.StatusStrip_Main.TabIndex = 8;
-            this.StatusStrip_Main.Text = "statusStrip1";
             // 
             // ToolstripProgress
             // 
             this.ToolstripProgress.Name = "ToolstripProgress";
-            this.ToolstripProgress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.ToolstripProgress.Size = new System.Drawing.Size(100, 16);
+            resources.ApplyResources(this.ToolstripProgress, "ToolstripProgress");
             this.ToolstripProgress.Step = 1;
-            this.ToolstripProgress.Visible = false;
             // 
             // ToolstripLabel
             // 
             this.ToolstripLabel.Name = "ToolstripLabel";
-            this.ToolstripLabel.Size = new System.Drawing.Size(0, 17);
-            this.ToolstripLabel.Visible = false;
+            resources.ApplyResources(this.ToolstripLabel, "ToolstripLabel");
             // 
             // ContextmenuCompletedDownloads
             // 
@@ -937,28 +706,24 @@ namespace Crawler2._0.Forms
             this.MenuItemGoTo,
             this.MenyItemDelete});
             this.ContextmenuCompletedDownloads.Name = "ContextmenuCompletedDownloads";
-            this.ContextmenuCompletedDownloads.Size = new System.Drawing.Size(191, 48);
+            resources.ApplyResources(this.ContextmenuCompletedDownloads, "ContextmenuCompletedDownloads");
             // 
             // MenuItemGoTo
             // 
             this.MenuItemGoTo.Name = "MenuItemGoTo";
-            this.MenuItemGoTo.Size = new System.Drawing.Size(190, 22);
-            this.MenuItemGoTo.Text = "Go to downloadfolder";
+            resources.ApplyResources(this.MenuItemGoTo, "MenuItemGoTo");
             // 
             // MenyItemDelete
             // 
             this.MenyItemDelete.Name = "MenyItemDelete";
-            this.MenyItemDelete.Size = new System.Drawing.Size(190, 22);
-            this.MenyItemDelete.Text = "Delete";
+            resources.ApplyResources(this.MenyItemDelete, "MenyItemDelete");
             // 
             // WebsiteDropdown
             // 
             this.WebsiteDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.WebsiteDropdown.FormattingEnabled = true;
-            this.WebsiteDropdown.Location = new System.Drawing.Point(12, 27);
+            resources.ApplyResources(this.WebsiteDropdown, "WebsiteDropdown");
             this.WebsiteDropdown.Name = "WebsiteDropdown";
-            this.WebsiteDropdown.Size = new System.Drawing.Size(106, 21);
-            this.WebsiteDropdown.TabIndex = 8;
             this.WebsiteDropdown.SelectedIndexChanged += new System.EventHandler(this.WebsiteDropdown_SelectedIndexChanged);
             // 
             // ListviewMangas
@@ -968,11 +733,9 @@ namespace Crawler2._0.Forms
             this.ListviewMangas.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.titleColumn,
             this.pageColumn});
-            this.ListviewMangas.Location = new System.Drawing.Point(12, 54);
+            resources.ApplyResources(this.ListviewMangas, "ListviewMangas");
             this.ListviewMangas.Name = "ListviewMangas";
             this.ListviewMangas.ShowGroups = false;
-            this.ListviewMangas.Size = new System.Drawing.Size(314, 607);
-            this.ListviewMangas.TabIndex = 17;
             this.ListviewMangas.UseCompatibleStateImageBehavior = false;
             this.ListviewMangas.View = System.Windows.Forms.View.Details;
             this.ListviewMangas.VirtualMode = true;
@@ -982,22 +745,18 @@ namespace Crawler2._0.Forms
             // titleColumn
             // 
             this.titleColumn.AspectName = "Title";
-            this.titleColumn.Text = "Title";
-            this.titleColumn.Width = 240;
+            resources.ApplyResources(this.titleColumn, "titleColumn");
             // 
             // pageColumn
             // 
             this.pageColumn.AspectName = "Pages";
             this.pageColumn.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.pageColumn.Text = "Pages";
-            this.pageColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.pageColumn.Width = 50;
+            resources.ApplyResources(this.pageColumn, "pageColumn");
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1118, 686);
             this.Controls.Add(this.ListviewMangas);
             this.Controls.Add(this.WebsiteDropdown);
             this.Controls.Add(this.StatusStrip_Main);
@@ -1005,7 +764,6 @@ namespace Crawler2._0.Forms
             this.Controls.Add(this.tabcontrolMain);
             this.Controls.Add(this.menuStrip1);
             this.Name = "Form1";
-            this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabcontrolMain.ResumeLayout(false);

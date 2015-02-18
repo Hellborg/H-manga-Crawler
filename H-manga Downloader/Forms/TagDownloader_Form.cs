@@ -20,10 +20,6 @@ namespace Crawler2._0.Forms
             //crawler.TagCrawlingFinishedEvent += crawler_TagCrawlingFinishedEvent;
         }
 
-       
-
-        
-
         private void TagDownloader_Form_Load(object sender, EventArgs e)
         {
             _crawler.Crawl_TagList("Pururin");

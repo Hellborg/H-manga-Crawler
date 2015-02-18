@@ -17,16 +17,13 @@ namespace Crawler2._0.Classes
         public void WriteToFile(string filePath, string value)
         {
             //if (!File.Exists(filePath))
-                //File.Create(filePath);
+            //File.Create(filePath);
 
 
-
-
-            using (StreamWriter sw = File.AppendText(filePath))
+            using (var sw = File.AppendText(filePath))
             {
                 sw.WriteLine(value);
             }
-            
         }
 
         public void WriteMangaList(List<Manga> mangaList, string website)
@@ -36,7 +33,7 @@ namespace Crawler2._0.Classes
                 var sb = new StringBuilder();
                 foreach (var m in mangaList)
                 {
-                    if(m == null)
+                    if (m == null)
                         Debugger.Break();
                     var tagbuilder = new StringBuilder();
                     string tags;
@@ -51,7 +48,7 @@ namespace Crawler2._0.Classes
                     else
                         tags = "1,2";
 
-                    sb.AppendLine(m.Title + "%#%"  + m.GalleryUrl + "%#%" + m.Pages + "%#%" + m.LocalImage +
+                    sb.AppendLine(m.Title + "%#%" + m.GalleryUrl + "%#%" + m.Pages + "%#%" + m.LocalImage +
                                   "%#%" +
                                   "http://" + m.ImagePath + "%#%" + tags + "%#%" + m.CoverUrl + "%#%" + m.Website +
                                   "%#%" + m.UniqueId);
@@ -70,27 +67,24 @@ namespace Crawler2._0.Classes
 
         public static List<Manga> ReadMangaList()
         {
-            List<Manga> tempList = new List<Manga>();
+            var tempList = new List<Manga>();
             //const string siteName = "Pururin";
             try
             {
                 foreach (var siteName in Form1.SupportedSites)
                 {
-                    
                     if (File.Exists("Data/Lists/" + siteName.ToLower() + ".List"))
                     {
                         using (var streamReader = new StreamReader("Data/Lists/" + siteName.ToLower() + ".List"))
                         {
-                            string[] separator = { "%#%" };
-                            
-                            string text = streamReader.ReadToEnd();
-                            string[] lines = text.Split(new []{"!%#%!"}, StringSplitOptions.RemoveEmptyEntries);
+                            string[] separator = {"%#%"};
+
+                            var text = streamReader.ReadToEnd();
+                            var lines = text.Split(new[] {"!%#%!"}, StringSplitOptions.RemoveEmptyEntries);
 
 
                             foreach (var line in lines)
                             {
-                                
-                            
                                 var m = new Manga();
                                 var explodedLine = line.Split(separator, StringSplitOptions.None);
                                 m.Title = explodedLine[0];
@@ -104,13 +98,15 @@ namespace Crawler2._0.Classes
                                 if (m.Website == "Nhentai")
                                 {
                                     m.UniqueId = explodedLine[8];
-                                    m.PageLinks = explodedLine[9].Split(new []{','},StringSplitOptions.RemoveEmptyEntries).ToArray();
+                                    m.PageLinks =
+                                        explodedLine[9].Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                                            .ToArray();
                                 }
-                                    
+
 
                                 var filename = "Data/Pictures/Covers/" + Path.GetFileName(m.ImagePath);
                                 //string localFile = 
-                                
+
                                 if (File.Exists(filename))
                                 {
                                     m.LocalImage = true;
@@ -121,8 +117,10 @@ namespace Crawler2._0.Classes
                                     m.LocalImage = Convert.ToBoolean(explodedLine[3]);
                                     m.ImagePath = explodedLine[4];
                                 }
-                                if(m.UniqueId == string.Empty)
-                                    Debugger.Log(1,"reader","title "+m.Title+" has no unique id, problem with json call?"+Environment.NewLine);
+                                if (m.UniqueId == string.Empty)
+                                    Debugger.Log(1, "reader",
+                                        "title " + m.Title + " has no unique id, problem with json call?" +
+                                        Environment.NewLine);
                                 //2ebugger.Log(1,"",m.Title+Environment.NewLine);
                                 var tagString = explodedLine[5].Split(',');
                                 //var tagInts = tagString.Select(int.Parse).ToArray();
@@ -130,7 +128,7 @@ namespace Crawler2._0.Classes
                                 m.Tags = tagString.ToArray();
 
                                 //if (MangaListLineRead != null)
-                                    //MangaListLineRead(m);
+                                //MangaListLineRead(m);
                                 tempList.Add(m);
                                 //MangaList.Add(m);
                                 //AddToListview(m);
@@ -138,7 +136,7 @@ namespace Crawler2._0.Classes
                         }
                     }
                 }
-               
+
                 //if (MangaListReadFinished != null)
                 //MangaListReadFinished();
             }
@@ -204,19 +202,13 @@ namespace Crawler2._0.Classes
                             var status = explodedLine[1];
                             var date = explodedLine[2];
 
-                            var downloadPath = explodedLine[3];
-                            //string Pages= ExplodedLine[4];
-                            var coverPath = explodedLine[4];
+                            
                             var timeTaken = explodedLine[5];
 
 
                             if (CompletedMangaLineRead != null)
                                 CompletedMangaLineRead(title, date, status, timeTaken);
                         }
-
-
-                        //add to listviewCompleted
-                        //and to CompletedList
                     }
                 }
             }
