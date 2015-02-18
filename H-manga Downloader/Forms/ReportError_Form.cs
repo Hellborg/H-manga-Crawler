@@ -28,7 +28,7 @@ namespace Crawler2._0.Forms
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Host = "mail.citynetwork.se";
-            client.Credentials = new NetworkCredential("crawler@hellborg.org","Hotchner13");
+            client.Credentials = new NetworkCredential("crawler@hellborg.org","");
             mail.Subject = "Uncaught Error - "+DateTime.Now;
             mail.Body = "Date: " + DateTime.Now +
                         "\n User message: "+ textBox1.Text+
