@@ -39,6 +39,7 @@
             this.textBox1.Location = new System.Drawing.Point(15, 25);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(383, 168);
             this.textBox1.TabIndex = 0;
             // 
@@ -70,7 +71,7 @@
             this.button2.Text = "Don\'t send";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // ReportError_Form
+            // ReportErrorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

@@ -18,6 +18,11 @@ namespace Crawler2._0.Forms
 
         private void ReportError_Form_Load(object sender, EventArgs e)
         {
+            textBox1.Text = "Date: " + DateTime.Now +
+                        "\n User message: " + textBox1.Text +
+                        "\n Error" + _tError.Exception.Message +
+                        "\n Stacktrace " + _tError.Exception.StackTrace +
+                        "\n BaseException " + _tError.Exception.GetBaseException();
         }
 
         private void button1_Click(object sender, EventArgs e)

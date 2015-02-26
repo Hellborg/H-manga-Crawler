@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
@@ -306,12 +307,22 @@ namespace Crawler2._0.Forms
 
         private void ShowMangaCover(Manga m)
         {
+            if (!Directory.Exists("Data/Pictures/Covers/" + m.Website))
+                Directory.CreateDirectory("Data/Pictures/Covers/" + m.Website);
+
+
+            string rootDirectory = AppDomain.CurrentDomain.BaseDirectory;
             var filename = Path.GetFileName(m.ImagePath);
-            string coverPath = "Data/Pictures/Covers/"+m.Website+"/"+m.UniqueId + "-" + filename;
+            string coverPath = rootDirectory+"/Data/Pictures/Covers/"+m.Website+"/"+m.UniqueId + "-" + filename;
             if (!File.Exists(coverPath))
             {
+
+                
                 pictureboxCover.Load(m.CoverUrl);
-                pictureboxCover.Image.Save(coverPath);
+                
+                WebClient client = new WebClient();
+                client.DownloadFile(m.CoverUrl,coverPath);
+                //pictureboxCover.Image.Save(coverPath);
             }
             else
             {
