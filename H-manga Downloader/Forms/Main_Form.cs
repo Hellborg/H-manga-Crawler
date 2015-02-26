@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -37,12 +38,14 @@ namespace Crawler2._0.Forms
         private List<Manga> _mangaList = new List<Manga>();
         private Dictionary<int, string> _tagDictionary = new Dictionary<int, string>();
         private TagDownloaderForm _tagDownloader;
-       
+
+        private Manga selectedManga;
+
+
         public Form1()
         {
             InitializeComponent();
             ServicePointManager.DefaultConnectionLimit = 160;
-           Thread.CurrentThread.CurrentUICulture = new CultureInfo("sv-SE");
             ThreadPool.SetMaxThreads(4, 4);
             
             CreateDirectories();
@@ -193,10 +196,10 @@ namespace Crawler2._0.Forms
 
         public void ClearInfoBox()
         {
-            pictureBox1.ImageLocation = null;
+            pictureboxCover.ImageLocation = null;
             lblTitle.Text = "";
             lblInfo.Text = "";
-            lblLanguage.Text = "";
+            lblDate.Text = "";
             lblPages.Text = "";
             lblTags.Text = "";
         }
@@ -301,19 +304,45 @@ namespace Crawler2._0.Forms
             Process.Start("www.pururin.com/gallery" + manga.GalleryUrl);
         }
 
+        private void ShowMangaCover(Manga m)
+        {
+            var filename = Path.GetFileName(m.ImagePath);
+            string coverPath = "Data/Pictures/Covers/"+m.Website+"/"+m.UniqueId + "-" + filename;
+            if (!File.Exists(coverPath))
+            {
+                pictureboxCover.Load(m.CoverUrl);
+                pictureboxCover.Image.Save(coverPath);
+            }
+            else
+            {
+                pictureboxCover.Load(coverPath);
+            }
+            
+        }
+
+        void pictureboxCover_LoadCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            var filename = Path.GetFileName(selectedManga.CoverUrl);
+            string filePath = "Data/Pictures/Covers/" + selectedManga.Website + "/" + selectedManga.UniqueId +"-"+
+                              filename;
+
+            pictureboxCover.Image.Save(filePath);
+        }
         private void ShowMangaInfo(object m)
         {
             var manga = (Manga) m;
+            selectedManga = manga;
             if (!InvokeRequired)
             {
                 if (!Directory.Exists("Data/Pictures/Covers"))
                     Directory.CreateDirectory("Data/Pictures/Covers");
 
 
-                pictureBox1.Load("Data/Pictures/ajax-loader.gif");
+                pictureboxCover.Load("Data/Pictures/ajax-loader.gif");
                 lblTitle.Text = Strings.manga_Title_String + manga.Title;
                 lblPages.Text = Strings.manga_Pages_String + manga.Pages;
                 lblInfo.Text = Strings.manga_Site_String + manga.Website;
+                lblDate.Text = "Date: "+manga.Date;
                 if (manga.Tags != null)
                 {
                     foreach (var x in manga.Tags)
@@ -324,44 +353,8 @@ namespace Crawler2._0.Forms
                         TagListbox.Items.Add(x.Trim());
                     }
                 }
-                var filename = Path.GetFileName(manga.ImagePath);
-                if (!File.Exists("Data/Pictures/Covers/" + manga.Website + "/" + manga.UniqueId + "-" + filename))
-                    //Means its not local.
-                {
-                    if (!Directory.Exists("Data/Pictures/Covers/" + manga.Website))
-                        Directory.CreateDirectory("Data/Pictures/Covers/" + manga.Website);
-
-
-                    if (tabcontrolMain.SelectedIndex == 0)
-                    {
-                        Cursor.Current = Cursors.WaitCursor;
-                        var req = WebRequest.Create(manga.CoverUrl);
-                        var stream = req.GetResponse().GetResponseStream();
-                        if (stream != null)
-                        {
-                            var img = Image.FromStream(stream);
-                            pictureBox1.Image = img;
-
-
-                            var imgPath = "Data/Pictures/Covers/" + manga.Website + "/" + manga.UniqueId + "-" +
-                                          filename;
-
-                            using (var client = new WebClient())
-                            {
-                                client.DownloadFile(new Uri(manga.CoverUrl), imgPath);
-                            }
-                            //img.Save(imgPath);
-                        }
-                        Cursor.Current = Cursors.Default;
-                        //anga.LocalImage = true;
-                    }
-                    //pictureBox1.ImageLocation = "http://" + manga.ImagePath;
-                }
-                else
-                {
-                    var imgPath = "Data/Pictures/Covers/" + manga.Website + "/" + manga.UniqueId + "-" + filename;
-                    pictureBox1.ImageLocation = imgPath;
-                }
+                
+                ShowMangaCover(manga);
             }
             else
                 Invoke(new Action(() => ShowMangaInfo(manga)));
@@ -773,7 +766,6 @@ namespace Crawler2._0.Forms
                 _mangaList = list;
                 FilterByTags();
                 InitializeList(_filteredList);
-                ToolstripProgress.Maximum = 0;
                 ToolstripProgress.Value = 0;
                 ToolstripLabel.Text = "";
                 ToolstripProgress.Visible = false;
@@ -936,6 +928,7 @@ namespace Crawler2._0.Forms
         public string Website { get; set; }
         public string UniqueId { get; set; }
         public string[] PageLinks { get; set; }
+        public string Date { get; set; }
     }
 
     internal class MasterSorter : Comparer<Manga>

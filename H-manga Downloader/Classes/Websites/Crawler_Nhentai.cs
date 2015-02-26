@@ -21,7 +21,7 @@ namespace Crawler2._0.Classes.Websites
         private const string MaxNodeXpathPururin = "div.pager";
         private const int NrOfCalls = 150;
         private readonly Downloader _downloader = new Downloader();
-        private readonly ManualResetEvent _ma = new ManualResetEvent(false);
+        
         private readonly List<Manga> _nhentaiMangaList = new List<Manga>();
         //private HtmlWeb _htmlAgilityWeb = new HtmlWeb();
         private readonly Settings _settings = new Settings();
@@ -71,58 +71,9 @@ namespace Crawler2._0.Classes.Websites
 
         //This is the function in use, downloads a list file from a server. the others exist to be used if this wont work
         //The failsafe has not been added.
-        public List<Manga> DownloadListfile()
-        {
-            var client = new WebClient();
+        
 
-            try
-            {
-                client.DownloadProgressChanged += client_DownloadProgressChanged;
-                client.DownloadFileCompleted += client_DownloadFileCompleted;
-
-                var localFile = "Data\\Lists\\nhentai.List";
-                var remoteFile = new Uri("http://hellborg.org.preview.crystone.se/Lists/nhentai.List");
-                var localFileInfo = new FileInfo(localFile);
-                if (File.Exists(localFile))
-                {
-                    if ((localFileInfo.CreationTime.Day - DateTime.Now.Day) > 1)
-                    {
-                        _ma.Reset();
-
-                        client.DownloadFileAsync(remoteFile, localFile);
-                        _ma.WaitOne();
-                    }
-                }
-                else
-                {
-                    _ma.Reset();
-
-                    client.DownloadFileAsync(remoteFile, localFile);
-                    _ma.WaitOne();
-                }
-
-
-                return Listhandler.ReadMangaList();
-            }
-            catch (WebException wex)
-            {
-                MessageBox.Show(wex.InnerException.ToString());
-                throw;
-            }
-        }
-
-        private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            _ma.Set();
-        }
-
-        private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            double percentage = e.ProgressPercentage;
-            if (ListCrawlingUpdateProgressEvent != null)
-                ListCrawlingUpdateProgressEvent(percentage);
-        }
-
+        
         //Not in use
         public void FetchFromApi()
         {
@@ -247,10 +198,7 @@ namespace Crawler2._0.Classes.Websites
             Debugger.Log(1, "API", "MangaList COunt = " + _nhentaiMangaList.Count);
         }
 
-        internal List<Manga> Crawl()
-        {
-            return DownloadListfile();
-        }
+      
 
         public List<string> GetSource(List<string> urls, int pages, string title) //not in use
         {

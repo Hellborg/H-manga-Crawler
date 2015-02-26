@@ -62,10 +62,10 @@ namespace Crawler2._0.Forms
             this.TagListbox = new System.Windows.Forms.ListBox();
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblTags = new System.Windows.Forms.Label();
-            this.lblLanguage = new System.Windows.Forms.Label();
+            this.lblDate = new System.Windows.Forms.Label();
             this.lblPages = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureboxCover = new System.Windows.Forms.PictureBox();
             this.TabpageOptions = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -125,7 +125,7 @@ namespace Crawler2._0.Forms
             this.groupBox3.SuspendLayout();
             this.groupBoxTags.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericFilterPageCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureboxCover)).BeginInit();
             this.TabpageOptions.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -165,10 +165,10 @@ namespace Crawler2._0.Forms
             this.TabpageInfo.Controls.Add(this.TagListbox);
             this.TabpageInfo.Controls.Add(this.lblInfo);
             this.TabpageInfo.Controls.Add(this.lblTags);
-            this.TabpageInfo.Controls.Add(this.lblLanguage);
+            this.TabpageInfo.Controls.Add(this.lblDate);
             this.TabpageInfo.Controls.Add(this.lblPages);
             this.TabpageInfo.Controls.Add(this.lblTitle);
-            this.TabpageInfo.Controls.Add(this.pictureBox1);
+            this.TabpageInfo.Controls.Add(this.pictureboxCover);
             resources.ApplyResources(this.TabpageInfo, "TabpageInfo");
             this.TabpageInfo.Name = "TabpageInfo";
             this.TabpageInfo.UseVisualStyleBackColor = true;
@@ -355,10 +355,10 @@ namespace Crawler2._0.Forms
             resources.ApplyResources(this.lblTags, "lblTags");
             this.lblTags.Name = "lblTags";
             // 
-            // lblLanguage
+            // lblDate
             // 
-            resources.ApplyResources(this.lblLanguage, "lblLanguage");
-            this.lblLanguage.Name = "lblLanguage";
+            resources.ApplyResources(this.lblDate, "lblDate");
+            this.lblDate.Name = "lblDate";
             // 
             // lblPages
             // 
@@ -370,12 +370,12 @@ namespace Crawler2._0.Forms
             resources.ApplyResources(this.lblTitle, "lblTitle");
             this.lblTitle.Name = "lblTitle";
             // 
-            // pictureBox1
+            // pictureboxCover
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
+            this.pictureboxCover.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.pictureboxCover, "pictureboxCover");
+            this.pictureboxCover.Name = "pictureboxCover";
+            this.pictureboxCover.TabStop = false;
             // 
             // TabpageOptions
             // 
@@ -774,7 +774,7 @@ namespace Crawler2._0.Forms
             this.groupBoxTags.ResumeLayout(false);
             this.groupBoxTags.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericFilterPageCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureboxCover)).EndInit();
             this.TabpageOptions.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -811,10 +811,10 @@ namespace Crawler2._0.Forms
         private MenuStrip menuStrip1;
         private ToolStripMenuItem mainToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
-        private PictureBox pictureBox1;
+        private PictureBox pictureboxCover;
         private Label lblInfo;
         private Label lblTags;
-        private Label lblLanguage;
+        private Label lblDate;
         private Label lblPages;
         private Label lblTitle;
         private ContextMenuStrip ContextmenuMangalist;

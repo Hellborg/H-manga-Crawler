@@ -94,13 +94,16 @@ namespace Crawler2._0.Classes
                                 //if (m.pages > maxPages)
                                 //  maxPages = m.pages;
                                 m.Website = explodedLine[7];
-
+                                m.Date = explodedLine[8];
                                 if (m.Website == "Nhentai")
                                 {
-                                    m.UniqueId = explodedLine[8];
+                                    m.UniqueId = explodedLine[9];
                                     m.PageLinks =
-                                        explodedLine[9].Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                                        explodedLine[10].Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
                                             .ToArray();
+
+
+                                    
                                 }
 
 

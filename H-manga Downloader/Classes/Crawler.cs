@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Reflection.Emit;
 using System.Threading;
+using System.Windows.Forms;
 using Crawler2._0.Classes.Websites;
 using Crawler2._0.Forms;
 
@@ -14,7 +19,7 @@ namespace Crawler2._0.Classes
         public static string DownloadPath;
         private readonly Listhandler _listhandler;
         //Classes
-
+        private readonly ManualResetEvent _ma = new ManualResetEvent(false);
 
         internal List<Manga> Mangalist;
 
@@ -42,7 +47,58 @@ namespace Crawler2._0.Classes
         }
 
         #region Mangalist Crawler
+        
 
+        public List<Manga> DownloadListFile(string Site)
+        {
+            var client = new WebClient();
+
+            try
+            {
+                client.DownloadProgressChanged += client_DownloadProgressChanged;
+                client.DownloadFileCompleted += client_DownloadFileCompleted;
+
+                var localFile = string.Format("Data\\Lists\\{0}.List",Site);
+                var remoteFile = new Uri(string.Format("http://hellborg.org.preview.crystone.se/Lists/{0}.List",Site));
+                var localFileInfo = new FileInfo(localFile);
+                if (File.Exists(localFile))
+                {
+                    if ((localFileInfo.CreationTime.Day - DateTime.Now.Day) > 1)
+                    {
+                        _ma.Reset();
+
+                        client.DownloadFileAsync(remoteFile, localFile);
+                        _ma.WaitOne();
+                    }
+                }
+                else
+                {
+                    _ma.Reset();
+
+                    client.DownloadFileAsync(remoteFile, localFile);
+                    _ma.WaitOne();
+                }
+
+
+                return Listhandler.ReadMangaList();
+            }
+            catch (WebException wex)
+            {
+                MessageBox.Show(wex.InnerException.ToString());
+                throw;
+            }
+        }
+        private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            _ma.Set();
+        }
+
+        private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            double percentage = e.ProgressPercentage;
+            if (MangalistCrawlingUpdateProgressEventRelay != null)
+                MangalistCrawlingUpdateProgressEventRelay(percentage);
+        }
         public void Crawl_MangaList(object siteName)
         {
             switch ((string) siteName)
@@ -53,14 +109,14 @@ namespace Crawler2._0.Classes
                     crawlerNhentai.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
 
 
-                    Mangalist = crawlerNhentai.Crawl();
-
+                    Mangalist = DownloadListFile("nhentai");
+                        
                     break;
                 case "Pururin":
                     var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
                     crawlerPururin.ListCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
                     crawlerPururin.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
-                    Mangalist = crawlerPururin.Crawl();
+                    Mangalist = DownloadListFile("pururin");
                     break;
 
 
