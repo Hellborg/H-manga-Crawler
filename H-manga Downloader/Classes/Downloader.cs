@@ -11,13 +11,14 @@ namespace Crawler2._0.Classes
     internal class Downloader
     {
         private readonly bool _createSubfolder;
+        private readonly bool _createSitefolder;
         private readonly Settings _settings = new Settings();
         //List<Thread> ThreadPool = new List<Thread>();
 
         public Downloader()
         {
             _createSubfolder = _settings.CreateSubfolders;
-            //_settings = settings;
+            _createSitefolder = _settings.CreateSiteFolder; //_settings = settings;
             //
             // ReSharper disable once ObjectCreationAsStatement
         }

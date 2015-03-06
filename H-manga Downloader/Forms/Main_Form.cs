@@ -40,6 +40,13 @@ namespace Crawler2._0.Forms
         private Dictionary<int, string> _tagDictionary = new Dictionary<int, string>();
         private TagDownloaderForm _tagDownloader;
 
+        private bool SortByAsc = true;
+
+        private int LastColumnIndex;
+
+
+
+
         private Manga selectedManga;
 
 
@@ -95,6 +102,8 @@ namespace Crawler2._0.Forms
             }
             UpdateWebsiteDropdown();
             TextboxCustomFilter.Text = _setting.FilterString;
+
+            
         }
 
         private void UpdateWebsiteDropdown()
@@ -148,6 +157,7 @@ namespace Crawler2._0.Forms
             _mangaList = Listhandler.ReadMangaList();
 
             numericFilterPageCount.Maximum = MaxPages;
+            
         }
 
         private void LoadTagList()
@@ -219,6 +229,7 @@ namespace Crawler2._0.Forms
             textboxRememberedFilter.Text = _setting.FilterString;
             SelectedPathTextbox.Text = _setting.DownloadPath;
             CreateSubfoldersCheckbox.Checked = _setting.CreateSubfolders;
+            createSiteFolderCheckbox.Checked = _setting.CreateSiteFolder;
         }
 
         private void SaveOptionsButton_Click(object sender, EventArgs e)
@@ -232,6 +243,9 @@ namespace Crawler2._0.Forms
             _setting.CreateSiteFolder = createSiteFolderCheckbox.Checked;
             _setting.RetryTime = Convert.ToDouble(numericRetryTime.Value);
             _setting.FilterString = textboxRememberedFilter.Text;
+            
+
+
             _setting.Save();
             TextboxCustomFilter.Text = _setting.FilterString;
         }
@@ -259,11 +273,12 @@ namespace Crawler2._0.Forms
 
         private void downloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ListviewMangas.SelectedObjects.Count >= 1)
+            if (ListviewMangas.SelectedIndices.Count >= 1)
             {
-                foreach (Manga m in ListviewMangas.SelectedObjects)
+                foreach (int i in ListviewMangas.SelectedIndices)
                 {
-                    //Manga manga = MangaList.Find(x => x.title == ListviewMangas.SelectedItem.Text);
+                   Manga m = _filteredList[i];
+        //            Manga manga = MangaList.Find(x => x.title == ListviewMangas.SelectedItem.Text);
                     var item = new ListViewItem {Text = m.Title};
 
                     var subItemStatus = new ListViewItem.ListViewSubItem();
@@ -285,9 +300,9 @@ namespace Crawler2._0.Forms
 
                     ThreadPool.QueueUserWorkItem(DownloadSelected, m);
 
-                    //var t = new Thread(DownloadSelected);
-                    //t.Start(m);
-                    //_threadPool.Add(t);
+        //            //var t = new Thread(DownloadSelected);
+        //            //t.Start(m);
+        //            //_threadPool.Add(t);
                 }
             }
         }
@@ -301,8 +316,8 @@ namespace Crawler2._0.Forms
 
         private void ToolstripItemGotoGallery_Click(object sender, EventArgs e)
         {
-            var manga = (Manga) ListviewMangas.SelectedObject;
-            Process.Start("www.pururin.com/gallery" + manga.GalleryUrl);
+            //var manga = (Manga) ListviewMangas.SelectedObject;
+            //Process.Start("www.pururin.com/gallery" + manga.GalleryUrl);
         }
 
         private void ShowMangaCover(Manga m)
@@ -342,6 +357,7 @@ namespace Crawler2._0.Forms
         private void ShowMangaInfo(object m)
         {
             var manga = (Manga) m;
+            TagListbox.Items.Clear();
             selectedManga = manga;
             if (!InvokeRequired)
             {
@@ -400,29 +416,31 @@ namespace Crawler2._0.Forms
 
         private void InitializeList(List<Manga> list)
         {
-            ListviewMangas.UseFiltering = true;
-            ListviewMangas.SetObjects(list);
-            ListviewMangas.ModelFilter = new ModelFilter(delegate(object x)
-            {
-                if (((Manga) x).Website == WebsiteDropdown.SelectedItem.ToString())
-                    return true;
-                return false;
-            });
+            if(_filteredList.Count != 0)
+                ListviewMangas.VirtualListSize = _filteredList.Count;
+            //ListviewMangas.UseFiltering = true;
+            //ListviewMangas.SetObjects(list);
+            //ListviewMangas.ModelFilter = new ModelFilter(delegate(object x)
+            //{
+            //    if (((Manga) x).Website == WebsiteDropdown.SelectedItem.ToString())
+            //        return true;
+            //    return false;
+            //});
             //ListviewMangas.Objects = list;
         }
 
         private void ListviewMangas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ListviewMangas.SelectedItem != null)
-            {
-                var index = ListviewMangas.SelectedIndex;
+            //if (ListviewMangas.SelectedItem != null)
+            //{
+            //    var index = ListviewMangas.SelectedIndex;
 
-                var m = (Manga) ListviewMangas.VirtualListDataSource.GetNthObject(index);
-                //ThreadPool.QueueUserWorkItem(ShowMangaInfo, m);
-                TagListbox.Items.Clear();
-                ShowMangaInfo(m);
-                //ShowMangaInfo(m);
-            }
+            //    var m = (Manga) ListviewMangas.VirtualListDataSource.GetNthObject(index);
+            //    //ThreadPool.QueueUserWorkItem(ShowMangaInfo, m);
+            //    TagListbox.Items.Clear();
+            //    ShowMangaInfo(m);
+            //    //ShowMangaInfo(m);
+            //}
         }
 
         private void ListviewMangas_CellRightClick(object sender, CellRightClickEventArgs e)
@@ -523,7 +541,7 @@ namespace Crawler2._0.Forms
 
             DownloadButton.Text = string.Format("Download List({0})",WebsiteDropdown.SelectedItem);
             InitializeList(_mangaList);
-            ListviewMangas.SelectObject(0);
+            //ListviewMangas.SelectObject(0);
         }
 
         private void showMangasWithoutThisTagToolStripMenuItem_Click(object sender, EventArgs e)
@@ -583,7 +601,7 @@ namespace Crawler2._0.Forms
             }
             else
             {
-                ListviewMangas.SetObjects(_mangaList);
+               // ListviewMangas.SetObjects(_mangaList);
             }
         }
 
@@ -709,9 +727,9 @@ namespace Crawler2._0.Forms
             //FilterByWebsite(WebsiteDropdown.SelectedItem.ToString());
             InitializeList(_filteredList);
             ClearInfoBox();
-            ListviewMangas.SelectedIndex = 0;
-            if (ListviewMangas.SelectedObject != null)
-                ShowMangaInfo(ListviewMangas.SelectedObject);
+            //ListviewMangas.SelectedIndex = 0;
+            //if (ListviewMangas.SelectedObject != null)
+            //    ShowMangaInfo(ListviewMangas.SelectedObject);
         }
 
         #endregion
@@ -903,28 +921,115 @@ namespace Crawler2._0.Forms
         }
 
         #endregion
-    }
 
-    public interface IModelFilter
-    {
-        bool Filter(object modelObject, string website);
-    }
-
-    public interface IListFilter
-    {
-        IEnumerable Filter(IEnumerable modelObjects);
-    }
-
-    public class SiteFilter : IModelFilter
-    {
-        public bool Filter(object modelObject, string website)
+        private void createSiteFolderCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (((Manga) modelObject).Website == website)
-                return true;
-            return false;
+            
+        }
+
+        private void listView1_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+
+            Manga m = _filteredList[e.ItemIndex];
+            ListViewItem listViewItem = new ListViewItem();
+            listViewItem.Text = m.Title;
+            ListViewItem.ListViewSubItem pagesSubItem = new ListViewItem.ListViewSubItem();
+            ListViewItem.ListViewSubItem dateSubItem = new ListViewItem.ListViewSubItem();
+
+
+            pagesSubItem.Text = m.Pages.ToString();
+            dateSubItem.Text = m.Date;
+
+            listViewItem.SubItems.Add(pagesSubItem);
+            listViewItem.SubItems.Add(dateSubItem);
+
+            e.Item = listViewItem;
+        }
+
+        private void ListviewMangas_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (ListviewMangas.SelectedIndices.Count != 0)
+                ShowMangaInfo(_filteredList[ListviewMangas.SelectedIndices[0]]);
+        }
+
+        private void ListviewMangas_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            Manga_SortByPagesByAscendingOrder mangaSortByPagesAscending = new Manga_SortByPagesByAscendingOrder();
+            Manga_SortByPagesByDescendingOrder mangaSortByPagesDescending = new Manga_SortByPagesByDescendingOrder();
+            Manga_SortByTitleByAscendingOrder mangaSortByTitleAscending = new Manga_SortByTitleByAscendingOrder();
+            Manga_SortByTitleByDescendingOrder mangaSortByTitleDescending = new Manga_SortByTitleByDescendingOrder();
+            Manga_SortByDateByAscendingOrder mangaSortByDateAscending = new Manga_SortByDateByAscendingOrder();
+            Manga_SortByDateByDescendingOrder mangaSortByDateDescending = new Manga_SortByDateByDescendingOrder();
+
+                
+            if(e.Column != LastColumnIndex)
+                ListviewMangas.Sorting = SortOrder.Ascending;
+            
+
+            switch (e.Column)
+            {
+                case 0:
+                    if (ListviewMangas.Sorting == SortOrder.Ascending)
+                        _filteredList.Sort(mangaSortByTitleAscending);
+
+                    else if (ListviewMangas.Sorting == SortOrder.Descending)
+                        _filteredList.Sort(mangaSortByTitleDescending);
+                    break;
+                case 1:
+                    if (ListviewMangas.Sorting == SortOrder.Ascending)
+                        _filteredList.Sort(mangaSortByPagesAscending);
+                    
+                    else if (ListviewMangas.Sorting == SortOrder.Descending)
+                        _filteredList.Sort(mangaSortByPagesDescending);
+                    
+                    break;
+                case 2:
+                    if (ListviewMangas.Sorting == SortOrder.Ascending)
+                        _filteredList.Sort(mangaSortByDateAscending);
+
+                    else if (ListviewMangas.Sorting == SortOrder.Descending)
+                        _filteredList.Sort(mangaSortByDateDescending);
+                    break;
+
+            }
+
+            if (ListviewMangas.Sorting == SortOrder.Ascending)
+            {
+                ListviewMangas.Sorting = SortOrder.Descending;
+                
+            }
+            else if (ListviewMangas.Sorting == SortOrder.Descending)
+            {
+                ListviewMangas.Sorting = SortOrder.Ascending;
+            }
+            LastColumnIndex = e.Column;
+            ListviewMangas.Refresh();
+        }
+
+        private void Sort(int columnIndex)
+        {
+       
+            
+
+            
+            //check if its the same column as last sort, if not: reset orderby.            
+            
+        }
+
+        private void ListviewMangas_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void ListviewMangas_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right) ContextmenuMangalist.Show(MousePosition);
         }
     }
 
+  
+
+    
     internal class Manga
     {
         public string Title { get; set; }
@@ -940,45 +1045,102 @@ namespace Crawler2._0.Forms
         public string UniqueId { get; set; }
         public string[] PageLinks { get; set; }
         public string Date { get; set; }
-    }
 
-    internal class MasterSorter : Comparer<Manga>
+        
+    }
+    internal class Manga_SortByDateByAscendingOrder : IComparer<Manga>
     {
-        private readonly OLVColumn _column;
-        private readonly SortOrder _sortOrder;
-
-        public MasterSorter(OLVColumn col, SortOrder order)
+        public int Compare(Manga a, Manga b)
         {
-            _column = col;
-            _sortOrder = order;
-        }
-
-        public override int Compare(Manga x, Manga y)
-        {
-            var xValue = _column.GetValue(x) as IComparable;
-            var yValue = _column.GetValue(y) as IComparable;
-
-            int result;
-            if (xValue == null || yValue == null)
-            {
-                if (xValue == null && yValue == null)
-                    result = 0;
-
-                else if (xValue != null)
-                    result = 1;
-
-                else
-                    result = -1;
-            }
-            else
-                result = xValue.CompareTo(yValue);
-
-            if (_sortOrder == SortOrder.Ascending)
-                return result;
-
-            return 0 - result;
+            DateTime dt1 = DateTime.Parse(a.Date);
+            DateTime dt2 = DateTime.Parse(b.Date);
+            if (dt1 > dt2) return 1;
+            else if (dt1 < dt2) return -1;
+            else return 0;
         }
     }
+    internal class Manga_SortByDateByDescendingOrder : IComparer<Manga>
+    {
+        public int Compare(Manga a, Manga b)
+        {
+            DateTime dt1 = DateTime.Parse(a.Date);
+            DateTime dt2 = DateTime.Parse(b.Date);
+            if (dt1 > dt2) return -1;
+            else if (dt1 < dt2) return 1;
+            else return 0;
+        }
+    }
+    internal class Manga_SortByTitleByAscendingOrder : IComparer<Manga>
+    {
+        public int Compare(Manga a, Manga b)
+        {
+            return string.Compare(a.Title, b.Title);
+        }
+    }
+    internal class Manga_SortByTitleByDescendingOrder : IComparer<Manga>
+    {
+        public int Compare(Manga a, Manga b)
+        {
+            return 0 - string.Compare(a.Title, b.Title);
+        }
+    }
+    internal class Manga_SortByPagesByAscendingOrder : IComparer<Manga>
+    {
+        public int Compare(Manga a, Manga b)
+        {
+            if (a.Pages > b.Pages) return 1;
+            else if (a.Pages < b.Pages) return -1;
+            else return 0;
+        }
+    }
+    internal class Manga_SortByPagesByDescendingOrder : IComparer<Manga>
+    {
+        public int Compare(Manga a, Manga b)
+        {
+            if (a.Pages > b.Pages) return -1;
+            else if (a.Pages < b.Pages) return 1;
+            else return 0;
+        }
+    }
+
+    //internal class MasterSorter : Comparer<Manga>
+    //{
+       
+    //    private readonly Column
+    //    private readonly SortOrder _sortOrder;
+
+    //    public MasterSorter(OLVColumn col, SortOrder order)
+    //    {
+    //        _column = col;
+    //        _sortOrder = order;
+    //    }
+
+    //    public override int Compare(Manga x, Manga y)
+    //    {
+    //        var xValue = _column.GetValue(x) as IComparable;
+    //        var yValue = _column.GetValue(y) as IComparable;
+
+    //        int result;
+    //        if (xValue == null || yValue == null)
+    //        {
+    //            if (xValue == null && yValue == null)
+    //                result = 0;
+
+    //            else if (xValue != null)
+    //                result = 1;
+
+    //            else
+    //                result = -1;
+    //        }
+    //        else
+    //            result = xValue.CompareTo(yValue);
+
+    //        if (_sortOrder == SortOrder.Ascending)
+    //            return result;
+
+    //        return 0 - result;
+    //    }
+    //}
 
     internal class MangaListDataSource : AbstractVirtualListDataSource, IFilterableDataSource
     {
@@ -1016,10 +1178,7 @@ namespace Crawler2._0.Forms
             return _objects.Count;
         }
 
-        public override void Sort(OLVColumn column, SortOrder order)
-        {
-            _objects.Sort(new MasterSorter(column, order));
-        }
+     
 
         public override int SearchText(string value, int first, int last, OLVColumn column)
         {

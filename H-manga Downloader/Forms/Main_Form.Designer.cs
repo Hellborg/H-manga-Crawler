@@ -71,10 +71,6 @@ namespace Crawler2._0.Forms
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.createSiteFolderCheckbox = new System.Windows.Forms.CheckBox();
-            this.LabelExampleName = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.NamingSchemeTextbox = new System.Windows.Forms.TextBox();
             this.CreateSubfoldersCheckbox = new System.Windows.Forms.CheckBox();
             this.SelectFolderButton = new System.Windows.Forms.Button();
             this.SelectedPathTextbox = new System.Windows.Forms.TextBox();
@@ -117,9 +113,10 @@ namespace Crawler2._0.Forms
             this.MenuItemGoTo = new System.Windows.Forms.ToolStripMenuItem();
             this.MenyItemDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.WebsiteDropdown = new System.Windows.Forms.ComboBox();
-            this.ListviewMangas = new BrightIdeasSoftware.FastObjectListView();
-            this.titleColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.pageColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.ListviewMangas = new System.Windows.Forms.ListView();
+            this.titleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pagesColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dateColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabcontrolMain.SuspendLayout();
             this.TabpageInfo.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -140,7 +137,6 @@ namespace Crawler2._0.Forms
             this.ContextmenuTags.SuspendLayout();
             this.StatusStrip_Main.SuspendLayout();
             this.ContextmenuCompletedDownloads.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ListviewMangas)).BeginInit();
             this.SuspendLayout();
             // 
             // DownloadButton
@@ -407,10 +403,6 @@ namespace Crawler2._0.Forms
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.createSiteFolderCheckbox);
-            this.groupBox2.Controls.Add(this.LabelExampleName);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.NamingSchemeTextbox);
             this.groupBox2.Controls.Add(this.CreateSubfoldersCheckbox);
             this.groupBox2.Controls.Add(this.SelectFolderButton);
             this.groupBox2.Controls.Add(this.SelectedPathTextbox);
@@ -424,26 +416,7 @@ namespace Crawler2._0.Forms
             resources.ApplyResources(this.createSiteFolderCheckbox, "createSiteFolderCheckbox");
             this.createSiteFolderCheckbox.Name = "createSiteFolderCheckbox";
             this.createSiteFolderCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // LabelExampleName
-            // 
-            resources.ApplyResources(this.LabelExampleName, "LabelExampleName");
-            this.LabelExampleName.Name = "LabelExampleName";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // NamingSchemeTextbox
-            // 
-            resources.ApplyResources(this.NamingSchemeTextbox, "NamingSchemeTextbox");
-            this.NamingSchemeTextbox.Name = "NamingSchemeTextbox";
+            this.createSiteFolderCheckbox.CheckedChanged += new System.EventHandler(this.createSiteFolderCheckbox_CheckedChanged);
             // 
             // CreateSubfoldersCheckbox
             // 
@@ -728,30 +701,33 @@ namespace Crawler2._0.Forms
             // 
             // ListviewMangas
             // 
-            this.ListviewMangas.AllColumns.Add(this.titleColumn);
-            this.ListviewMangas.AllColumns.Add(this.pageColumn);
             this.ListviewMangas.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.titleColumn,
-            this.pageColumn});
+            this.pagesColumn,
+            this.dateColumn});
             resources.ApplyResources(this.ListviewMangas, "ListviewMangas");
             this.ListviewMangas.Name = "ListviewMangas";
-            this.ListviewMangas.ShowGroups = false;
+            this.ListviewMangas.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.ListviewMangas.UseCompatibleStateImageBehavior = false;
             this.ListviewMangas.View = System.Windows.Forms.View.Details;
             this.ListviewMangas.VirtualMode = true;
-            this.ListviewMangas.CellRightClick += new System.EventHandler<BrightIdeasSoftware.CellRightClickEventArgs>(this.ListviewMangas_CellRightClick);
-            this.ListviewMangas.SelectedIndexChanged += new System.EventHandler(this.ListviewMangas_SelectedIndexChanged);
+            this.ListviewMangas.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListviewMangas_ColumnClick);
+            this.ListviewMangas.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.listView1_RetrieveVirtualItem);
+            this.ListviewMangas.SelectedIndexChanged += new System.EventHandler(this.ListviewMangas_SelectedIndexChanged_1);
+            this.ListviewMangas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListviewMangas_MouseClick);
+            this.ListviewMangas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListviewMangas_MouseDown);
             // 
             // titleColumn
             // 
-            this.titleColumn.AspectName = "Title";
             resources.ApplyResources(this.titleColumn, "titleColumn");
             // 
-            // pageColumn
+            // pagesColumn
             // 
-            this.pageColumn.AspectName = "Pages";
-            this.pageColumn.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            resources.ApplyResources(this.pageColumn, "pageColumn");
+            resources.ApplyResources(this.pagesColumn, "pagesColumn");
+            // 
+            // dateColumn
+            // 
+            resources.ApplyResources(this.dateColumn, "dateColumn");
             // 
             // Form1
             // 
@@ -793,7 +769,6 @@ namespace Crawler2._0.Forms
             this.StatusStrip_Main.ResumeLayout(false);
             this.StatusStrip_Main.PerformLayout();
             this.ContextmenuCompletedDownloads.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ListviewMangas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -834,10 +809,6 @@ namespace Crawler2._0.Forms
         private Button SelectFolderButton;
         private TextBox SelectedPathTextbox;
         private CheckBox CreateSubfoldersCheckbox;
-        private Label label2;
-        private TextBox NamingSchemeTextbox;
-        private Label LabelExampleName;
-        private Label label3;
         private ToolStripMenuItem ToolstripItemDownload;
         private TabPage TabpageDownloads;
         private TabControl TabcontrolDownloads;
@@ -885,12 +856,13 @@ namespace Crawler2._0.Forms
         private ComboBox WebsiteDropdown;
         private ColumnHeader TimeColumn_3;
         private ToolStripMenuItem showMangasWithoutThisTagToolStripMenuItem;
-        private FastObjectListView ListviewMangas;
-        private OLVColumn titleColumn;
-        private OLVColumn pageColumn;
         private Label label6;
         private TextBox textboxRememberedFilter;
         private Label labelFilteredOut;
+        private ListView ListviewMangas;
+        private ColumnHeader titleColumn;
+        private ColumnHeader pagesColumn;
+        private ColumnHeader dateColumn;
       
     
     }

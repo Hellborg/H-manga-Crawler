@@ -384,9 +384,13 @@ namespace Crawler2._0.Classes.Websites
             var id = idRegex.Match(url).Groups[1].Value;
             var titleRegex = new Regex(@id + "/(.*)");
             var title = titleRegex.Match(url).Groups[1].Value;
-            var downloadPath = "";
+            
+            string path;
+            if (_settings.CreateSiteFolder)
+                path = _settings.DownloadPath + "/Pururin/";
+            else
+                path = _settings.DownloadPath+"/";
 
-            downloadPath = _settings.DownloadPath + "/Pururin/";
 
 
             if (PictureCrawlingStartedEvent != null)
@@ -402,13 +406,13 @@ namespace Crawler2._0.Classes.Websites
             Parallel.ForEach(sourceQueue, currentSource =>
             {
                 currentCount++;
-                if (!_downloader.Download(currentSource, downloadPath, m.Title, m.Title, m.Pages, currentCount)) return;
+                if (!_downloader.Download(currentSource, path, m.Title, m.Title, m.Pages, currentCount)) return;
 
                 if (PictureDownloadUpdateProgressEvent != null)
                     PictureDownloadUpdateProgressEvent(m.Title, m.Pages, currentCount); //
             }); //add crawlerObject to download queue, and 
 
-            Crawler.DownloadPath = downloadPath;
+            Crawler.DownloadPath = path;
         }
 
         public void CrawlTagList_Pururin(object state)

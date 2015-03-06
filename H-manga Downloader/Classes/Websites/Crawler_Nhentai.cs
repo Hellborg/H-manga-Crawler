@@ -296,8 +296,11 @@ namespace Crawler2._0.Classes.Websites
                     sourceQueue.Add(string.Format(Strings.nhentai_url_String, m.UniqueId, s));
                 }
             }
-            var path = _settings.DownloadPath + "/Nhentai/";
-
+            string path;
+            if (_settings.CreateSiteFolder)
+                path = _settings.DownloadPath + "/Nhentai/";
+            else
+                path = _settings.DownloadPath+"/";
 
             if (PictureDownloadStartedEvent != null)
                 PictureDownloadStartedEvent(m.Title, m.Pages.ToString());

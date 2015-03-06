@@ -123,10 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="DownloadButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>124, 27</value>
+    <value>200, 27</value>
   </data>
   <data name="DownloadButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 26</value>
+    <value>194, 26</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="DownloadButton.TabIndex" type="System.Int32, mscorlib">
@@ -154,7 +154,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="ClearFilterButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>563, 251</value>
+    <value>568, 251</value>
   </data>
   <data name="ClearFilterButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 29</value>
@@ -181,7 +181,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="ApplyFilterButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>657, 251</value>
+    <value>662, 251</value>
   </data>
   <data name="ApplyFilterButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 29</value>
@@ -637,7 +637,7 @@
     <value>6, 42</value>
   </data>
   <data name="groupBoxTags.Size" type="System.Drawing.Size, System.Drawing">
-    <value>739, 203</value>
+    <value>744, 203</value>
   </data>
   <data name="groupBoxTags.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -709,7 +709,7 @@
     <value>9, 316</value>
   </data>
   <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>751, 286</value>
+    <value>756, 286</value>
   </data>
   <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -913,7 +913,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabpageInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>766, 608</value>
+    <value>771, 608</value>
   </data>
   <data name="TabpageInfo.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -937,7 +937,7 @@
     <value>6, 19</value>
   </data>
   <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>340, 292</value>
+    <value>339, 357</value>
   </data>
   <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -958,7 +958,7 @@
     <value>414, 10</value>
   </data>
   <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 382</value>
+    <value>351, 382</value>
   </data>
   <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1005,105 +1005,6 @@
   <data name="&gt;&gt;createSiteFolderCheckbox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="LabelExampleName.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LabelExampleName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>219, 167</value>
-  </data>
-  <data name="LabelExampleName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 13</value>
-  </data>
-  <data name="LabelExampleName.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;LabelExampleName.Name" xml:space="preserve">
-    <value>LabelExampleName</value>
-  </data>
-  <data name="&gt;&gt;LabelExampleName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelExampleName.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;LabelExampleName.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 167</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 13</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Example:</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 148</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 13</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Chapter folder name</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="NamingSchemeTextbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 164</value>
-  </data>
-  <data name="NamingSchemeTextbox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 20</value>
-  </data>
-  <data name="NamingSchemeTextbox.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;NamingSchemeTextbox.Name" xml:space="preserve">
-    <value>NamingSchemeTextbox</value>
-  </data>
-  <data name="&gt;&gt;NamingSchemeTextbox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;NamingSchemeTextbox.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;NamingSchemeTextbox.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="CreateSubfoldersCheckbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1129,7 +1030,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;CreateSubfoldersCheckbox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>1</value>
   </data>
   <data name="SelectFolderButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>298, 16</value>
@@ -1153,7 +1054,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;SelectFolderButton.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>2</value>
   </data>
   <data name="SelectedPathTextbox.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 17</value>
@@ -1174,7 +1075,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;SelectedPathTextbox.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>3</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1201,7 +1102,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>4</value>
   </data>
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 202</value>
@@ -1282,7 +1183,7 @@
     <value>129, 76</value>
   </data>
   <data name="textboxRememberedFilter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>267, 20</value>
+    <value>233, 20</value>
   </data>
   <data name="textboxRememberedFilter.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1405,7 +1306,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabpageOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>766, 608</value>
+    <value>771, 608</value>
   </data>
   <data name="TabpageOptions.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1447,7 +1348,7 @@
     <value>3, 3</value>
   </data>
   <data name="ListviewCurrentDownloads.Size" type="System.Drawing.Size, System.Drawing">
-    <value>752, 576</value>
+    <value>757, 576</value>
   </data>
   <data name="ListviewCurrentDownloads.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1471,7 +1372,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>758, 582</value>
+    <value>763, 582</value>
   </data>
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1498,7 +1399,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>758, 582</value>
+    <value>763, 582</value>
   </data>
   <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1549,7 +1450,7 @@
     <value>3, 3</value>
   </data>
   <data name="ListviewCompletedDownloads.Size" type="System.Drawing.Size, System.Drawing">
-    <value>752, 576</value>
+    <value>757, 576</value>
   </data>
   <data name="ListviewCompletedDownloads.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1573,7 +1474,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>758, 582</value>
+    <value>763, 582</value>
   </data>
   <data name="tabPage3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1600,7 +1501,7 @@
     <value>0, 0</value>
   </data>
   <data name="TabcontrolDownloads.Size" type="System.Drawing.Size, System.Drawing">
-    <value>766, 608</value>
+    <value>771, 608</value>
   </data>
   <data name="TabcontrolDownloads.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1621,7 +1522,7 @@
     <value>4, 22</value>
   </data>
   <data name="TabpageDownloads.Size" type="System.Drawing.Size, System.Drawing">
-    <value>766, 608</value>
+    <value>771, 608</value>
   </data>
   <data name="TabpageDownloads.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1642,10 +1543,10 @@
     <value>2</value>
   </data>
   <data name="tabcontrolMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>332, 27</value>
+    <value>400, 27</value>
   </data>
   <data name="tabcontrolMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>774, 634</value>
+    <value>779, 634</value>
   </data>
   <data name="tabcontrolMain.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1681,7 +1582,7 @@
     <value>0, 0</value>
   </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1118, 24</value>
+    <value>1179, 24</value>
   </data>
   <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1771,7 +1672,7 @@
     <value>0, 664</value>
   </data>
   <data name="StatusStrip_Main.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1118, 22</value>
+    <value>1179, 22</value>
   </data>
   <data name="StatusStrip_Main.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1840,31 +1741,34 @@
     <value>Title</value>
   </data>
   <data name="titleColumn.Width" type="System.Int32, mscorlib">
-    <value>240</value>
+    <value>150</value>
   </data>
-  <data name="pageColumn.Text" xml:space="preserve">
+  <data name="pagesColumn.Text" xml:space="preserve">
     <value>Pages</value>
   </data>
-  <data name="pageColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="pageColumn.Width" type="System.Int32, mscorlib">
+  <data name="pagesColumn.Width" type="System.Int32, mscorlib">
     <value>50</value>
   </data>
+  <data name="dateColumn.Text" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="dateColumn.Width" type="System.Int32, mscorlib">
+    <value>75</value>
+  </data>
   <data name="ListviewMangas.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 54</value>
+    <value>12, 59</value>
   </data>
   <data name="ListviewMangas.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 607</value>
+    <value>382, 602</value>
   </data>
   <data name="ListviewMangas.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;ListviewMangas.Name" xml:space="preserve">
     <value>ListviewMangas</value>
   </data>
   <data name="&gt;&gt;ListviewMangas.Type" xml:space="preserve">
-    <value>BrightIdeasSoftware.FastObjectListView, ObjectListView, Version=2.8.0.37175, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4</value>
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ListviewMangas.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1879,7 +1783,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1118, 686</value>
+    <value>1179, 686</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>a</value>
@@ -1996,13 +1900,19 @@
     <value>titleColumn</value>
   </data>
   <data name="&gt;&gt;titleColumn.Type" xml:space="preserve">
-    <value>BrightIdeasSoftware.OLVColumn, ObjectListView, Version=2.8.0.37175, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;pageColumn.Name" xml:space="preserve">
-    <value>pageColumn</value>
+  <data name="&gt;&gt;pagesColumn.Name" xml:space="preserve">
+    <value>pagesColumn</value>
   </data>
-  <data name="&gt;&gt;pageColumn.Type" xml:space="preserve">
-    <value>BrightIdeasSoftware.OLVColumn, ObjectListView, Version=2.8.0.37175, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4</value>
+  <data name="&gt;&gt;pagesColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dateColumn.Name" xml:space="preserve">
+    <value>dateColumn</value>
+  </data>
+  <data name="&gt;&gt;dateColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Form1</value>
