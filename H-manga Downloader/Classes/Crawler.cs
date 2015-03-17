@@ -59,7 +59,7 @@ namespace Crawler2._0.Classes
                 client.DownloadFileCompleted += client_DownloadFileCompleted;
 
                 var localFile = string.Format("Data\\Lists\\{0}.List",Site);
-                var remoteFile = new Uri(string.Format("http://hellborg.org.preview.crystone.se/Lists/{0}.List",Site));
+                var remoteFile = new Uri(string.Format("http://hellborg.org/Lists/{0}.List",Site));
                 var localFileInfo = new FileInfo(localFile);
                 if (File.Exists(localFile))
                 {
