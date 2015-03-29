@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Activation;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Crawler2._0.Forms;
 using Crawler2._0.Properties;
 using CsQuery;
@@ -300,7 +303,7 @@ namespace Crawler2._0.Classes.Websites
             if (_settings.CreateSiteFolder)
                 path = _settings.DownloadPath + "/Nhentai/";
             else
-                path = _settings.DownloadPath+"/";
+                path = _settings.DownloadPath+"//";
 
             if (PictureDownloadStartedEvent != null)
                 PictureDownloadStartedEvent(m.Title, m.Pages.ToString());
@@ -314,6 +317,7 @@ namespace Crawler2._0.Classes.Websites
                 if (PictureDownloadUpdateProgressEvent != null)
                     PictureDownloadUpdateProgressEvent(m.Title, m.Pages, currentCount); //
             }); //add crawlerObject to download queue, and 
+
 
             Crawler.DownloadPath = path;
         }

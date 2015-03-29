@@ -166,5 +166,17 @@ namespace Crawler2._0.Properties {
                 this["FilterString"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowDuplicates {
+            get {
+                return ((bool)(this["ShowDuplicates"]));
+            }
+            set {
+                this["ShowDuplicates"] = value;
+            }
+        }
     }
 }

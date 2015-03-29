@@ -77,10 +77,9 @@ namespace Crawler2._0.Forms
             this.label1 = new System.Windows.Forms.Label();
             this.SaveOptionsButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.showduplicateCheckbox = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textboxRememberedFilter = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.numericRetryTime = new System.Windows.Forms.NumericUpDown();
             this.SaveCoversCheckbox = new System.Windows.Forms.CheckBox();
             this.TabpageDownloads = new System.Windows.Forms.TabPage();
             this.TabcontrolDownloads = new System.Windows.Forms.TabControl();
@@ -127,7 +126,6 @@ namespace Crawler2._0.Forms
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericRetryTime)).BeginInit();
             this.TabpageDownloads.SuspendLayout();
             this.TabcontrolDownloads.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -451,14 +449,20 @@ namespace Crawler2._0.Forms
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.showduplicateCheckbox);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.textboxRememberedFilter);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.numericRetryTime);
             this.groupBox1.Controls.Add(this.SaveCoversCheckbox);
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // showduplicateCheckbox
+            // 
+            resources.ApplyResources(this.showduplicateCheckbox, "showduplicateCheckbox");
+            this.showduplicateCheckbox.Name = "showduplicateCheckbox";
+            this.showduplicateCheckbox.UseVisualStyleBackColor = true;
+            this.showduplicateCheckbox.MouseHover += new System.EventHandler(this.checkboxShowDuplicate_MouseHover);
             // 
             // label6
             // 
@@ -469,31 +473,6 @@ namespace Crawler2._0.Forms
             // 
             resources.ApplyResources(this.textboxRememberedFilter, "textboxRememberedFilter");
             this.textboxRememberedFilter.Name = "textboxRememberedFilter";
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
-            // 
-            // numericRetryTime
-            // 
-            resources.ApplyResources(this.numericRetryTime, "numericRetryTime");
-            this.numericRetryTime.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numericRetryTime.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericRetryTime.Name = "numericRetryTime";
-            this.numericRetryTime.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // SaveCoversCheckbox
             // 
@@ -626,7 +605,6 @@ namespace Crawler2._0.Forms
             // 
             this.ToolstripItemGotoGallery.Name = "ToolstripItemGotoGallery";
             resources.ApplyResources(this.ToolstripItemGotoGallery, "ToolstripItemGotoGallery");
-            this.ToolstripItemGotoGallery.Click += new System.EventHandler(this.ToolstripItemGotoGallery_Click);
             // 
             // ToolstripItemDownload
             // 
@@ -757,7 +735,6 @@ namespace Crawler2._0.Forms
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericRetryTime)).EndInit();
             this.TabpageDownloads.ResumeLayout(false);
             this.TabcontrolDownloads.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -824,8 +801,6 @@ namespace Crawler2._0.Forms
         private ColumnHeader StatusColumn_3;
         private ColumnHeader CompletedOnColumn_3;
         private ColumnHeader PagesColumn_1;
-        private Label label4;
-        private NumericUpDown numericRetryTime;
         private ContextMenuStrip ContextmenuCompletedDownloads;
         private ToolStripMenuItem MenuItemGoTo;
         private ToolStripMenuItem MenyItemDelete;
@@ -863,6 +838,7 @@ namespace Crawler2._0.Forms
         private ColumnHeader titleColumn;
         private ColumnHeader pagesColumn;
         private ColumnHeader dateColumn;
+        private CheckBox showduplicateCheckbox;
       
     
     }

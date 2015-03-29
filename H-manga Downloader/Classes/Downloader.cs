@@ -11,33 +11,15 @@ namespace Crawler2._0.Classes
     internal class Downloader
     {
         private readonly bool _createSubfolder;
-        private readonly bool _createSitefolder;
         private readonly Settings _settings = new Settings();
-        //List<Thread> ThreadPool = new List<Thread>();
 
         public Downloader()
         {
             _createSubfolder = _settings.CreateSubfolders;
-            _createSitefolder = _settings.CreateSiteFolder; //_settings = settings;
             //
+            
             // ReSharper disable once ObjectCreationAsStatement
         }
-
-        //public void Downloader_Threadhandler(object o)
-        //{
-        //    while (DownloadQueue.Count != 0)
-        //    {
-        //        Crawler.CrawlerObject crawlerObject = DownloadQueue.Dequeue();
-        //        for (int x = 0; x < DownloaderThreadCount; x++)
-        //        {
-        //            Thread t = new Thread(new ParameterizedThreadStart(Downloader_DoWork));
-        //            t.Start(crawlerObject);
-        //           _downloaderThreadPool.Add(t);
-        //        }
-        //    }
-
-        //}  
-
 
         internal bool Download(string url, string downloadPath, string folderName, string title, int pages,
             int queueCount)
@@ -47,16 +29,9 @@ namespace Crawler2._0.Classes
 
             if (!Directory.Exists(sanitizedPath))
                 Directory.CreateDirectory(sanitizedPath);
-
-            //if (PictureDownloadUpdateProgressEvent != null)
-            //PictureDownloadUpdateProgressEvent(title, pages, QueueCount);
-
-            //Downloadpath = E://något/manganamn
-            // name = filnamn
             var localFilename = CreateSanitizedFileName(sanitizedPath, name);
             if (!File.Exists(localFilename))
             {
-//måste fixa någon typ av errorkoll eftersom den dödar allt om den får ett problem
                 using (var client = new WebClient())
                 {
                     try
@@ -71,9 +46,6 @@ namespace Crawler2._0.Classes
                         Loghandler.LogToFile(ex.Message + " - " + url, 3);
                         return false;
                     }
-
-
-                    //Fire file downloaded eventD
                 }
             }
             return true;
@@ -113,26 +85,7 @@ namespace Crawler2._0.Classes
             }
         }
 
-
-        #region Pururin
-
-        #region Mangas
-
-        //The actual work that the thread does. this differs from the other 
-
-        #endregion
-
-        #region Tags
-
-        #endregion
-
-        #endregion
     }
 
-    internal class DownloadObject
-    {
-        public string Url { get; set; }
-        public string Path { get; set; }
-        public string Title { get; set; }
-    }
+    
 }

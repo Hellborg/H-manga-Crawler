@@ -144,4 +144,10 @@
   <data name="PictureDownloadStartedEvent_Downloading" xml:space="preserve">
     <value>Downloading</value>
   </data>
+  <data name="CrawlerNhentai_BalloonText" xml:space="preserve">
+    <value>H-manga downloader has finished downloading {0}</value>
+  </data>
+  <data name="CrawlerNhentai_BalloonTitle" xml:space="preserve">
+    <value>Manga download finished</value>
+  </data>
 </root>

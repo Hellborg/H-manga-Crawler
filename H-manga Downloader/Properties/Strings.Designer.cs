@@ -70,6 +70,24 @@ namespace Crawler2._0.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to H-manga downloader has finished downloading {0}.
+        /// </summary>
+        internal static string CrawlerNhentai_BalloonText {
+            get {
+                return ResourceManager.GetString("CrawlerNhentai_BalloonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manga download finished.
+        /// </summary>
+        internal static string CrawlerNhentai_BalloonTitle {
+            get {
+                return ResourceManager.GetString("CrawlerNhentai_BalloonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This will make the process much slower, are you sure you want to enable this?.
         /// </summary>
         internal static string Download_covers_String {

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
@@ -40,14 +36,12 @@ namespace Crawler2._0.Forms
         private Dictionary<int, string> _tagDictionary = new Dictionary<int, string>();
         private TagDownloaderForm _tagDownloader;
 
-        private bool SortByAsc = true;
-
-        private int LastColumnIndex;
+        private int _lastColumnIndex;
 
 
 
 
-        private Manga selectedManga;
+        private Manga _selectedManga;
 
 
         public Form1()
@@ -58,7 +52,7 @@ namespace Crawler2._0.Forms
             
             CreateDirectories();
             _saveCovers = _setting.SaveCoversToDisk;
-
+            
             _listhandler.CompletedMangaLineRead += _listhandler_CompletedLineRead;
         }
 
@@ -92,6 +86,8 @@ namespace Crawler2._0.Forms
             _crawler = new Crawler(_listhandler, _mangaList);
             CreateCrawlerEventListeners();
         }
+
+       
 
         private void LoadGui()
         {
@@ -230,6 +226,7 @@ namespace Crawler2._0.Forms
             SelectedPathTextbox.Text = _setting.DownloadPath;
             CreateSubfoldersCheckbox.Checked = _setting.CreateSubfolders;
             createSiteFolderCheckbox.Checked = _setting.CreateSiteFolder;
+            showduplicateCheckbox.Checked = _setting.ShowDuplicates;
         }
 
         private void SaveOptionsButton_Click(object sender, EventArgs e)
@@ -241,9 +238,8 @@ namespace Crawler2._0.Forms
             _setting.CreateSubfolders = CreateSubfoldersCheckbox.Checked;
             //_setting.DownloadingJobs = Convert.ToInt32(NumericDownloaderJobs.Value);
             _setting.CreateSiteFolder = createSiteFolderCheckbox.Checked;
-            _setting.RetryTime = Convert.ToDouble(numericRetryTime.Value);
             _setting.FilterString = textboxRememberedFilter.Text;
-            
+            _setting.ShowDuplicates = showduplicateCheckbox.Checked;
 
 
             _setting.Save();
@@ -300,9 +296,6 @@ namespace Crawler2._0.Forms
 
                     ThreadPool.QueueUserWorkItem(DownloadSelected, m);
 
-        //            //var t = new Thread(DownloadSelected);
-        //            //t.Start(m);
-        //            //_threadPool.Add(t);
                 }
             }
         }
@@ -314,11 +307,7 @@ namespace Crawler2._0.Forms
                 CreateSubfoldersCheckbox.Checked);
         }
 
-        private void ToolstripItemGotoGallery_Click(object sender, EventArgs e)
-        {
-            //var manga = (Manga) ListviewMangas.SelectedObject;
-            //Process.Start("www.pururin.com/gallery" + manga.GalleryUrl);
-        }
+       
 
         private void ShowMangaCover(Manga m)
         {
@@ -331,34 +320,22 @@ namespace Crawler2._0.Forms
             string coverPath = rootDirectory+"/Data/Pictures/Covers/"+m.Website+"/"+m.UniqueId + "-" + filename;
             if (!File.Exists(coverPath))
             {
-
-                
                 pictureboxCover.Load(m.CoverUrl);
-                
                 WebClient client = new WebClient();
                 client.DownloadFile(m.CoverUrl,coverPath);
-                //pictureboxCover.Image.Save(coverPath);
             }
             else
             {
                 pictureboxCover.Load(coverPath);
             }
-            
         }
 
-        void pictureboxCover_LoadCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            var filename = Path.GetFileName(selectedManga.CoverUrl);
-            string filePath = "Data/Pictures/Covers/" + selectedManga.Website + "/" + selectedManga.UniqueId +"-"+
-                              filename;
-
-            pictureboxCover.Image.Save(filePath);
-        }
+        
         private void ShowMangaInfo(object m)
         {
             var manga = (Manga) m;
             TagListbox.Items.Clear();
-            selectedManga = manga;
+            _selectedManga = manga;
             if (!InvokeRequired)
             {
                 if (!Directory.Exists("Data/Pictures/Covers"))
@@ -374,9 +351,6 @@ namespace Crawler2._0.Forms
                 {
                     foreach (var x in manga.Tags)
                     {
-                        //string tagValue;
-                        //_//tagDictionary.TryGetValue(x, out tagValue);
-                        //if (tagValue != null) 
                         TagListbox.Items.Add(x.Trim());
                     }
                 }
@@ -400,9 +374,6 @@ namespace Crawler2._0.Forms
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //iterate over mangalist and save to mangalist, either that or come up with some other way to determine wether is localfile
-
-
             SaveCompletedToFile();
         }
 
@@ -418,35 +389,11 @@ namespace Crawler2._0.Forms
         {
             if(_filteredList.Count != 0)
                 ListviewMangas.VirtualListSize = _filteredList.Count;
-            //ListviewMangas.UseFiltering = true;
-            //ListviewMangas.SetObjects(list);
-            //ListviewMangas.ModelFilter = new ModelFilter(delegate(object x)
-            //{
-            //    if (((Manga) x).Website == WebsiteDropdown.SelectedItem.ToString())
-            //        return true;
-            //    return false;
-            //});
-            //ListviewMangas.Objects = list;
         }
 
-        private void ListviewMangas_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //if (ListviewMangas.SelectedItem != null)
-            //{
-            //    var index = ListviewMangas.SelectedIndex;
+        
 
-            //    var m = (Manga) ListviewMangas.VirtualListDataSource.GetNthObject(index);
-            //    //ThreadPool.QueueUserWorkItem(ShowMangaInfo, m);
-            //    TagListbox.Items.Clear();
-            //    ShowMangaInfo(m);
-            //    //ShowMangaInfo(m);
-            //}
-        }
-
-        private void ListviewMangas_CellRightClick(object sender, CellRightClickEventArgs e)
-        {
-            ContextmenuMangalist.Show(MousePosition);
-        }
+      
 
         private void ListviewCompletedDownloads_MouseClick(object sender, MouseEventArgs e)
         {
@@ -477,34 +424,12 @@ namespace Crawler2._0.Forms
 
         private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            //_setting.ChosenWebsites.Add(e.Node.Text);
             _setting.Save();
 
 
             WebsiteDropdown.Items.Clear();
             UpdateWebsiteDropdown();
 
-
-            //e.Node.Checked
-            //if (e.Node.Text == "Reddit")
-            //{ 
-            //    if(e.Node.Checked)
-            //    {
-            //        if(_setting.FirstSubreddit)
-            //            MessageBox.Show(Resources.First_Subreddit_Message_string);
-
-            //        TreeNode node = new TreeNode();
-            //        //e.Node.Nodes.Add(node);
-            //        treeView1.Nodes.Add(node);
-            //        node.Checked = true;
-            //        node.BeginEdit();
-            //        if (!node.IsEditing)
-            //        {
-            //            node.BeginEdit();
-            //        }
-            //        e.Node.Checked = false;
-            //    }
-            //}
         }
 
         private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
@@ -515,7 +440,6 @@ namespace Crawler2._0.Forms
                 {
                     e.Node.Text = e.Label;
                     e.Node.EndEdit(false);
-                    //_setting.ChosenWebsites.Add(e.Node.Text);
                     _setting.FirstSubreddit = false;
                     _setting.Save();
 
@@ -525,14 +449,12 @@ namespace Crawler2._0.Forms
                 else
                 {
                     e.Node.Remove();
-                    //Uncheck reddit one
                 }
             }
             else
             {
                 e.Node.Remove();
             }
-            //e.Node.Remove();
         }
 
         private void WebsiteDropdown_SelectedIndexChanged(object sender, EventArgs e)
@@ -541,7 +463,6 @@ namespace Crawler2._0.Forms
 
             DownloadButton.Text = string.Format("Download List({0})",WebsiteDropdown.SelectedItem);
             InitializeList(_mangaList);
-            //ListviewMangas.SelectObject(0);
         }
 
         private void showMangasWithoutThisTagToolStripMenuItem_Click(object sender, EventArgs e)
@@ -727,9 +648,6 @@ namespace Crawler2._0.Forms
             //FilterByWebsite(WebsiteDropdown.SelectedItem.ToString());
             InitializeList(_filteredList);
             ClearInfoBox();
-            //ListviewMangas.SelectedIndex = 0;
-            //if (ListviewMangas.SelectedObject != null)
-            //    ShowMangaInfo(ListviewMangas.SelectedObject);
         }
 
         #endregion
@@ -962,7 +880,7 @@ namespace Crawler2._0.Forms
             Manga_SortByDateByDescendingOrder mangaSortByDateDescending = new Manga_SortByDateByDescendingOrder();
 
                 
-            if(e.Column != LastColumnIndex)
+            if(e.Column != _lastColumnIndex)
                 ListviewMangas.Sorting = SortOrder.Ascending;
             
 
@@ -1002,7 +920,7 @@ namespace Crawler2._0.Forms
             {
                 ListviewMangas.Sorting = SortOrder.Ascending;
             }
-            LastColumnIndex = e.Column;
+            _lastColumnIndex = e.Column;
             ListviewMangas.Refresh();
         }
 
@@ -1024,6 +942,18 @@ namespace Crawler2._0.Forms
         private void ListviewMangas_MouseClick(object sender, MouseEventArgs e)
         {
             if(e.Button == MouseButtons.Right) ContextmenuMangalist.Show(MousePosition);
+        }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void checkboxShowDuplicate_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip toolTip = new ToolTip();
+            toolTip.SetToolTip(this.showduplicateCheckbox,"Shows mangas with the same name, if disabled, will only show the one with the most pages");
+            
         }
     }
 

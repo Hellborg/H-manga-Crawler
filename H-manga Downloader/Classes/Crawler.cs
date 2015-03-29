@@ -15,274 +15,272 @@ using Crawler2._0.Forms;
 namespace Crawler2._0.Classes
 {
     internal class Crawler
+
+{
+    public static string DownloadPath;
+    private readonly Listhandler _listhandler;
+    //Classes
+    private readonly ManualResetEvent _ma = new ManualResetEvent(false);
+
+    internal List<Manga> Mangalist;
+
+    public Crawler(Listhandler lstHandler, List<Manga> list)
     {
-        public static string DownloadPath;
-        private readonly Listhandler _listhandler;
-        //Classes
-        private readonly ManualResetEvent _ma = new ManualResetEvent(false);
+        _listhandler = lstHandler;
+        Mangalist = list;
 
-        internal List<Manga> Mangalist;
 
-        public Crawler(Listhandler lstHandler, List<Manga> list)
+        PictureCrawlingFinishedEvent += crawler_PictureCrawlingFinishedEvent;
+        ThreadPool.SetMaxThreads(1, 1);
+    }
+
+    private void crawler_PictureCrawlingFinishedEvent(int index, Manga manga)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public virtual void OnPictureCrawlingFinishedEvent(int index, Manga manga)
+    {
+        var handler = PictureCrawlingFinishedEvent;
+        if (handler != null) handler(index, manga);
+    }
+
+    #region Mangalist Crawler
+
+
+    public List<Manga> DownloadListFile(string Site)
+    {
+        var client = new WebClient();
+
+        try
         {
-            _listhandler = lstHandler;
-            Mangalist = list;
-            //_mainForm = mainForm;
-            // _htmlAgilityDocumentTag = htmlAgilityDocumentTag;
+            client.DownloadProgressChanged += client_DownloadProgressChanged;
+            client.DownloadFileCompleted += client_DownloadFileCompleted;
 
-
-            PictureCrawlingFinishedEvent += crawler_PictureCrawlingFinishedEvent;
-            ThreadPool.SetMaxThreads(1, 1);
-        }
-
-        private void crawler_PictureCrawlingFinishedEvent(int index, Manga manga)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public virtual void OnPictureCrawlingFinishedEvent(int index, Manga manga)
-        {
-            var handler = PictureCrawlingFinishedEvent;
-            if (handler != null) handler(index, manga);
-        }
-
-        #region Mangalist Crawler
-        
-
-        public List<Manga> DownloadListFile(string Site)
-        {
-            var client = new WebClient();
-
-            try
+            var localFile = string.Format("Data\\Lists\\{0}.List", Site);
+            var remoteFile = new Uri(string.Format("http://hellborg.org/Lists/{0}.List", Site));
+            var localFileInfo = new FileInfo(localFile);
+            if (File.Exists(localFile))
             {
-                client.DownloadProgressChanged += client_DownloadProgressChanged;
-                client.DownloadFileCompleted += client_DownloadFileCompleted;
-
-                var localFile = string.Format("Data\\Lists\\{0}.List",Site);
-                var remoteFile = new Uri(string.Format("http://hellborg.org/Lists/{0}.List",Site));
-                var localFileInfo = new FileInfo(localFile);
-                if (File.Exists(localFile))
-                {
-                    if ((localFileInfo.CreationTime.Day - DateTime.Now.Day) > 1)
-                    {
-                        _ma.Reset();
-
-                        client.DownloadFileAsync(remoteFile, localFile);
-                        _ma.WaitOne();
-                    }
-                }
-                else
+                if ((localFileInfo.CreationTime.Day - DateTime.Now.Day) > 1)
                 {
                     _ma.Reset();
 
                     client.DownloadFileAsync(remoteFile, localFile);
                     _ma.WaitOne();
                 }
-
-
-                return Listhandler.ReadMangaList();
             }
-            catch (WebException wex)
+            else
             {
-                MessageBox.Show(wex.InnerException.ToString());
-                throw;
-            }
-        }
-        private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            _ma.Set();
-        }
+                _ma.Reset();
 
-        private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            double percentage = e.ProgressPercentage;
-            if (MangalistCrawlingUpdateProgressEventRelay != null)
-                MangalistCrawlingUpdateProgressEventRelay(percentage);
-        }
-        public void Crawl_MangaList(object siteName)
-        {
-            switch ((string) siteName)
-            {
-                case "Nhentai":
-                    var crawlerNhentai = new CrawlerNhentai(_listhandler.ReadTagList());
-                    crawlerNhentai.ListCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
-                    crawlerNhentai.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
-
-
-                    Mangalist = DownloadListFile("nhentai");
-                        
-                    break;
-                case "Pururin":
-                    var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
-                    crawlerPururin.ListCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
-                    crawlerPururin.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
-                    Mangalist = DownloadListFile("pururin");
-                    break;
-
-
-                case "Fakku":
-
-                    break;
-                case "Hentai2read":
-
-
-                    break;
+                client.DownloadFileAsync(remoteFile, localFile);
+                _ma.WaitOne();
             }
 
 
-            MangalistCrawlingUpdateProgressEventRelay = null;
-            MangalistCrawlingStartedEventRelay = null;
+            return Listhandler.ReadMangaList();
+        }
+        catch (WebException wex)
+        {
+            MessageBox.Show(wex.InnerException.ToString());
+            throw;
+        }
+    }
 
-            //_listhandler.WriteMangaList(Mangalist, (string) siteName);
-            if (MangalistCrawlingFinishedEvent != null)
-                MangalistCrawlingFinishedEvent(Mangalist);
+    private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+    {
+        _ma.Set();
+    }
+
+    private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+    {
+        double percentage = e.ProgressPercentage;
+        if (MangalistCrawlingUpdateProgressEventRelay != null)
+            MangalistCrawlingUpdateProgressEventRelay(percentage);
+    }
+
+    public void Crawl_MangaList(object siteName)
+    {
+        switch ((string) siteName)
+        {
+            case "Nhentai":
+                var crawlerNhentai = new CrawlerNhentai(_listhandler.ReadTagList());
+                crawlerNhentai.ListCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
+                crawlerNhentai.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
+
+
+                Mangalist = DownloadListFile("nhentai");
+
+                break;
+            case "Pururin":
+                var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
+                crawlerPururin.ListCrawlingStartedEvent += MangalistCrawlingStartedEventRelay;
+                crawlerPururin.ListCrawlingUpdateProgressEvent += MangalistCrawlingUpdateProgressEventRelay;
+                Mangalist = DownloadListFile("pururin");
+                break;
+
+
+            case "Fakku":
+
+                break;
+            case "Hentai2read":
+
+
+                break;
         }
 
-        #endregion
 
-        #region PictureUrl Crawler
+        MangalistCrawlingUpdateProgressEventRelay = null;
+        MangalistCrawlingStartedEventRelay = null;
 
-        public void Crawl_PictureUrls(string siteName, Manga selectedManga, int index, bool createSubfolders)
+        //_listhandler.WriteMangaList(Mangalist, (string) siteName);
+        if (MangalistCrawlingFinishedEvent != null)
+            MangalistCrawlingFinishedEvent(Mangalist);
+    }
+
+    #endregion
+
+    #region PictureUrl Crawler
+
+    public void Crawl_PictureUrls(string siteName, Manga selectedManga, int index, bool createSubfolders)
+    {
+        var stopwatch = new Stopwatch();
+        switch (siteName)
         {
-            var stopwatch = new Stopwatch();
-            switch (siteName)
-            {
-                case "Pururin":
+            case "Pururin":
 
-                    var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
-                    crawlerPururin.PictureCrawlingStartedEvent += PictureCrawlingStartedEventRelay;
-                    crawlerPururin.PictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
-                    crawlerPururin.PictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
-                    crawlerPururin.PictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
+                var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
+                crawlerPururin.PictureCrawlingStartedEvent += PictureCrawlingStartedEventRelay;
+                crawlerPururin.PictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
+                crawlerPururin.PictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
+                crawlerPururin.PictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
 
 
-                    stopwatch.Start();
+                stopwatch.Start();
 
-                    crawlerPururin.CrawlPictureUrls_Pururin(selectedManga, createSubfolders);
+                crawlerPururin.CrawlPictureUrls_Pururin(selectedManga, createSubfolders);
 
-                    if (stopwatch.IsRunning)
-                        stopwatch.Stop();
+                if (stopwatch.IsRunning)
+                    stopwatch.Stop();
 
-                    if (MangaDownloadFinishedEventRelay != null)
-                        MangaDownloadFinishedEventRelay(selectedManga.Title, DateTime.Now,
-                            stopwatch.Elapsed.Seconds + " seconds");
+                if (MangaDownloadFinishedEventRelay != null)
+                    MangaDownloadFinishedEventRelay(selectedManga.Title, DateTime.Now,
+                        stopwatch.Elapsed.Seconds + " seconds");
+                Form1.CompletedMangaToBeSaved.Add(
+                    selectedManga.Title +
+                    "%#%Downloaded%#%" +
+                    DateTime.Now + "%#%" +
+                    DownloadPath + "%#%" +
+                    selectedManga.CoverUrl + "%#%" +
+                    stopwatch.Elapsed.Seconds + " seconds");
+                break;
+            case "Nhentai":
+                var crawlerNhentai = new CrawlerNhentai(null);
 
+                crawlerNhentai.PictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
+                crawlerNhentai.PictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
+                crawlerNhentai.PictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
+                //PictureDownloadStartedEvent
+                stopwatch.Start();
+                crawlerNhentai.CrawlPictureUrls_Nhentai(selectedManga, createSubfolders);
+                if (stopwatch.IsRunning)
+                    stopwatch.Stop();
 
-                    Form1.CompletedMangaToBeSaved.Add(
-                        selectedManga.Title +
-                        "%#%Downloaded%#%" +
-                        DateTime.Now + "%#%" +
-                        DownloadPath + "%#%" +
-                        selectedManga.CoverUrl + "%#%" +
+                if (MangaDownloadFinishedEventRelay != null)
+                    MangaDownloadFinishedEventRelay(selectedManga.Title, DateTime.Now,
                         stopwatch.Elapsed.Seconds + " seconds");
 
-                    break;
-                case "Nhentai":
-                    var crawlerNhentai = new CrawlerNhentai(null);
 
-                    crawlerNhentai.PictureCrawlingUpdateProgressEvent += PictureCrawlingUpdateProgressEventRelay;
-                    crawlerNhentai.PictureDownloadStartedEvent += PictureDownloadStartedEventRelay;
-                    crawlerNhentai.PictureDownloadUpdateProgressEvent += PictureDownloadUpdateProgressEventRelay;
-                    //PictureDownloadStartedEvent
-                    stopwatch.Start();
-                    crawlerNhentai.CrawlPictureUrls_Nhentai(selectedManga, createSubfolders);
-                    if (stopwatch.IsRunning)
-                        stopwatch.Stop();
-
-                    if (MangaDownloadFinishedEventRelay != null)
-                        MangaDownloadFinishedEventRelay(selectedManga.Title, DateTime.Now,
-                            stopwatch.Elapsed.Seconds + " seconds");
+                _listhandler.WriteToFile("Data\\Lists\\CompletedDownloads.List",
+                    selectedManga.Title +
+                    "%#%Downloaded%#%" +
+                    DateTime.Now + "%#%" +
+                    DownloadPath + "%#%" +
+                    selectedManga.CoverUrl +
+                    "%#%" + stopwatch.Elapsed.Seconds
+                    );
 
 
-                    _listhandler.WriteToFile("Data\\Lists\\CompletedDownloads.List",
-                        selectedManga.Title +
-                        "%#%Downloaded%#%" +
-                        DateTime.Now + "%#%" +
-                        DownloadPath + "%#%" +
-                        selectedManga.CoverUrl +
-                        "%#%" + stopwatch.Elapsed.Seconds
-                        );
+                break;
+            case "Fakku":
 
-
-                    break;
-                case "Fakku":
-
-                    break;
-            }
+                break;
         }
+    }
 
-        #endregion
+    #endregion
 
-        #region eventhandlers and relay functions
+    #region eventhandlers and relay functions
 
-        public delegate void MangaDownloadFinishedEventHandler(string title, DateTime time, string timeTaken);
+    public delegate void MangaDownloadFinishedEventHandler(string title, DateTime time, string timeTaken);
 
-        public delegate void MangaListCrawlingFailedEventHandler(string url);
+    public delegate void MangaListCrawlingFailedEventHandler(string url);
 
-        public delegate void MangalistCrawlingFinishedEventHandler(List<Manga> list);
+    public delegate void MangalistCrawlingFinishedEventHandler(List<Manga> list);
 
-        public delegate void MangalistCrawlingStartedEventHandler(int maximum);
+    public delegate void MangalistCrawlingStartedEventHandler(int maximum);
 
-        public delegate void MangalistCrawlingUpdateProgressEventHandler(double percentage);
+    public delegate void MangalistCrawlingUpdateProgressEventHandler(double percentage);
 
-        public delegate void MangaReadEventHandler(int pages);
+    public delegate void MangaReadEventHandler(int pages);
 
-        public delegate void PictureCrawlingFinishedEventHandler(int index, Manga manga);
+    public delegate void PictureCrawlingFinishedEventHandler(int index, Manga manga);
 
-        public delegate void PictureCrawlingStartedEventHandler(
-            string title, string status, string percentage, string pages);
+    public delegate void PictureCrawlingStartedEventHandler(
+        string title, string status, string percentage, string pages);
 
-        public delegate void PictureCrawlingUpdateProgressEventHandler(string title, int pageCount, int queueCount);
+    public delegate void PictureCrawlingUpdateProgressEventHandler(string title, int pageCount, int queueCount);
 
-        public delegate void PictureDownloadStartedEventHandler(string title, string pages);
+    public delegate void PictureDownloadStartedEventHandler(string title, string pages);
 
-        public delegate void PictureDownloadUpdateProgressEventHandler(string title, int pageCount, int queueCount);
+    public delegate void PictureDownloadUpdateProgressEventHandler(string title, int pageCount, int queueCount);
 
-        public delegate void TagCrawlingFinishedEventHandler();
+    public delegate void TagCrawlingFinishedEventHandler();
 
-        public delegate void TagCrawlingStartedEventHandler(
-            string sitename, int pages, int currentpage);
+    public delegate void TagCrawlingStartedEventHandler(
+        string sitename, int pages, int currentpage);
 
-        public delegate void TagCrawlingUpdateProgressEventHandler(int value);
+    public delegate void TagCrawlingUpdateProgressEventHandler(int value);
 
 
-        public event MangalistCrawlingFinishedEventHandler MangalistCrawlingFinishedEvent;
-        public event MangalistCrawlingStartedEventHandler MangalistCrawlingStartedEventRelay;
-        public event MangalistCrawlingUpdateProgressEventHandler MangalistCrawlingUpdateProgressEventRelay;
-        public event PictureCrawlingStartedEventHandler PictureCrawlingStartedEventRelay;
-        public event PictureCrawlingUpdateProgressEventHandler PictureCrawlingUpdateProgressEventRelay;
-        public event PictureCrawlingFinishedEventHandler PictureCrawlingFinishedEvent;
-        public event MangaDownloadFinishedEventHandler MangaDownloadFinishedEventRelay;
-        public event PictureDownloadStartedEventHandler PictureDownloadStartedEventRelay;
-        public event PictureDownloadUpdateProgressEventHandler PictureDownloadUpdateProgressEventRelay;
+    public event MangalistCrawlingFinishedEventHandler MangalistCrawlingFinishedEvent;
+    public event MangalistCrawlingStartedEventHandler MangalistCrawlingStartedEventRelay;
+    public event MangalistCrawlingUpdateProgressEventHandler MangalistCrawlingUpdateProgressEventRelay;
+    public event PictureCrawlingStartedEventHandler PictureCrawlingStartedEventRelay;
+    public event PictureCrawlingUpdateProgressEventHandler PictureCrawlingUpdateProgressEventRelay;
+    public event PictureCrawlingFinishedEventHandler PictureCrawlingFinishedEvent;
+    public event MangaDownloadFinishedEventHandler MangaDownloadFinishedEventRelay;
+    public event PictureDownloadStartedEventHandler PictureDownloadStartedEventRelay;
+    public event PictureDownloadUpdateProgressEventHandler PictureDownloadUpdateProgressEventRelay;
 
-        #endregion
+    #endregion
 
-        #region Tag Crawler
+    #region Tag Crawler
 
-        public void Crawl_TagList(string siteName)
+    public void Crawl_TagList(string siteName)
+    {
+        switch (siteName)
         {
-            switch (siteName)
-            {
-                case "Pururin":
-                    var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
-                    crawlerPururin.CrawlTagList_Pururin(null);
+            case "Pururin":
+                var crawlerPururin = new CrawlerPururin(_listhandler.ReadTagList());
+                crawlerPururin.CrawlTagList_Pururin(null);
 
-                    break;
-            }
+                break;
         }
+    }
 
 
-        public void CrawlTagList_Pururin_DoWork()
-        {
-            /*
+    public void CrawlTagList_Pururin_DoWork()
+    {
+        /*
          kolla om HtmlAgilityDocument_Picture != null
           * om så är fallet, så är det första sidan.
 
 
          */
-        }
-
-        #endregion
     }
+
+    #endregion
+}
 }

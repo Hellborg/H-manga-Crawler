@@ -69,6 +69,9 @@ namespace Crawler2._0.Classes
         {
             var tempList = new List<Manga>();
             //const string siteName = "Pururin";
+
+            //Implement Check if show duplicates is enabled, if so only show the one with the most pages
+
             try
             {
                 foreach (var siteName in Form1.SupportedSites)

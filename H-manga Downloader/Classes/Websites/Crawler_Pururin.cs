@@ -389,7 +389,7 @@ namespace Crawler2._0.Classes.Websites
             if (_settings.CreateSiteFolder)
                 path = _settings.DownloadPath + "/Pururin/";
             else
-                path = _settings.DownloadPath+"/";
+                path = _settings.DownloadPath + "//";
 
 
 
